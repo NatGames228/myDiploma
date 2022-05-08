@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-import ImgScreen from './ImgScreen';
+import Img from './components/Img';
 
 const logo = {
   source: { uri: 'https://www.culture.ru/storage/images/4ed2740a-90c7-58d1-a244-092f28e7b7ac' },
@@ -10,16 +10,19 @@ const logo = {
   available: true
 };
 
-const HomeScreen = () => (
-  <ScrollView backgroundColor='#fff'>
-    <ImgScreen logo={logo}/>
-    <ImgScreen logo={logo}/>
-    <ImgScreen logo={logo}/>
-    <ImgScreen logo={logo}/>
-    <ImgScreen logo={logo}/>
-    <ImgScreen logo={logo}/>
-  </ScrollView>
-);
+const HomeScreen = () => {
+  return (
+
+    <ScrollView backgroundColor='#fff'>
+      <Img logo={logo}/>
+      <Img logo={logo}/>
+      <Img logo={logo}/>
+      <Img logo={logo}/>
+      <Img logo={logo}/>
+      <Img logo={logo}/>
+    </ScrollView>
+  )
+}
 
 export default HomeScreen;
 

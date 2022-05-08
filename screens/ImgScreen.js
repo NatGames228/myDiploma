@@ -1,19 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
 
-
-const ImgScreen = ({logo}) => (
-  <TouchableOpacity 
-    onPress={() => alert('This is the "Home" screen.')}
-    style={styles.container}
-  >
-    <Image 
-    source={logo.source}
-    style={[styles.img, logo.available ? {opacity: 1} : {opacity: 0.5}]}
-  />
-    <Text style={{ fontSize: 25 }}>{logo.name}</Text>
-  </TouchableOpacity>
-);
+const ImgScreen = ({ route, navigation }) => {
+  const logo = route.params;
+  return (
+    <Text>{logo.name}</Text>
+  )
+};
 
 export default ImgScreen;
 
