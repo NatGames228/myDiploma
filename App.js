@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import ImgScreen from './screens/ImgScreen';
 import MainContainer from './screens/MainContainer';
+import AddQuestionScreen from './screens/AddQuestionScreen';
 
 import { COLORS } from './constants/theme'
 
@@ -20,6 +21,7 @@ export default function App() {
         <NativeStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <NativeStack.Screen options={{ headerShown: false }} name="Main" component={MainContainer} />
         <Stack.Screen options={{ title: 'Go home' }} name="Img" component={ImgScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="AddQuestionScreen" component={AddQuestionScreen} />
       </NativeStack.Navigator>
     </NavigationContainer>
   );

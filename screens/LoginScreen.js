@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
-import { auth } from '../firebase'
+import { auth } from '../utils/firebase'
 
 import { COLORS } from '../constants/theme'
 
