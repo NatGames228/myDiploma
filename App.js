@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -14,6 +14,10 @@ import { COLORS } from './constants/theme'
 const NativeStack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 
+// firebases logs
+LogBox.ignoreLogs([`Warning: Async Storage has been extracted from react-native core`]);
+LogBox.ignoreLogs([`Setting a timer for a long period`]);
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -21,7 +25,7 @@ export default function App() {
         <NativeStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <NativeStack.Screen options={{ headerShown: false }} name="Main" component={MainContainer} />
         <Stack.Screen options={{ title: 'Go home' }} name="Img" component={ImgScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="AddQuestionScreen" component={AddQuestionScreen} />
+        <Stack.Screen options={{ headerShown: false }}name="AddQuestionScreen" component={AddQuestionScreen} />
       </NativeStack.Navigator>
     </NavigationContainer>
   );
