@@ -1,7 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
 import { auth } from '../firebase'
+
+import { COLORS } from '../constants/theme'
 
 const SettingsScreen = () => {
   const navigation = useNavigation()
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: COLORS.primary,
     width: '60%',
     padding: 15,
     borderRadius: 10,
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   buttonText: {
-    color: 'white',
+    color: COLORS.white,
     fontWeight: '700',
     fontSize: 16,
   },

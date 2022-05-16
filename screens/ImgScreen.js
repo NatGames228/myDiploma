@@ -3,16 +3,18 @@ import { TouchableOpacity, Image, StyleSheet, ScrollView, Text } from 'react-nat
 
 import Map from './components/Map';
 
+import { COLORS } from '../constants/theme';
+
 const ImgScreen = ({ route, navigation }) => {
   const logo = route.params;
   return (
-    <ScrollView backgroundColor='#fff'>
-      <Image 
-      source={logo.source}
-      style={styles.img}
-     />
+    <ScrollView backgroundColor={COLORS.white}>
+      <Image
+        source={logo.source}
+        style={styles.img}
+      />
       <Text style={styles.text}>{logo.text}</Text>
-    <Map />
+      <Map />
     </ScrollView>
 
   )
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
-    
+
   },
   img: {
     width: '100%',

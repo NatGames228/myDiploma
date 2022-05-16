@@ -2,11 +2,13 @@ import * as React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
+import { COLORS } from '../../constants/theme';
+
 export default function App() {
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} 
-          initialRegion={{
+      <MapView style={styles.map}
+        initialRegion={{
           latitude: 55.7983486,
           // latitude: 55.7823547,
           longitude: 49.1051597,
@@ -16,7 +18,7 @@ export default function App() {
         }}
       >
         <Marker
-          coordinate={{ latitude : 55.79840099276407, longitude : 49.10550120304926 }}
+          coordinate={{ latitude: 55.79840099276407, longitude: 49.10550120304926 }}
           // image={{uri: 'custom_pin'}}
           pinColor="blue"
         >
@@ -32,7 +34,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
   },

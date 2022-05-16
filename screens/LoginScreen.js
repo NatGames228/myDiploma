@@ -1,7 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
+
 import { auth } from '../firebase'
+
+import { COLORS } from '../constants/theme'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -19,22 +22,22 @@ const LoginScreen = () => {
     return unsubscribe
   }, [])
 
-   const handleSingUp = () => {
-     auth
-       .createUserWithEmailAndPassword(email, password)
-       .then(userCredentials => {
-         const user = userCredentials.user;
-         console.log('Registered with', user.email);
-       })
-       .catch(error => alert(error.message))
-   }
+  const handleSingUp = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
 
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Logged in with: ',user.email);
+        console.log('Logged in with: ', user.email);
       })
       .catch(error => alert(error.message))
 
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
@@ -105,26 +108,26 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: COLORS.primary,
     width: '100%',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
   },
   buttonOutline: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: COLORS.primary,
     borderWidth: 2,
 
   },
   buttonText: {
-    color: 'white',
+    color: COLORS.white,
     fontWeight: '700',
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color: COLORS.primary,
     fontWeight: '700',
     fontSize: 16,
   },

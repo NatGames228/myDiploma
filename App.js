@@ -8,6 +8,8 @@ import LoginScreen from './screens/LoginScreen';
 import ImgScreen from './screens/ImgScreen';
 import MainContainer from './screens/MainContainer';
 
+import { COLORS } from './constants/theme'
+
 const NativeStack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 
@@ -17,7 +19,7 @@ export default function App() {
       <NativeStack.Navigator>
         <NativeStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <NativeStack.Screen options={{ headerShown: false }} name="Main" component={MainContainer} />
-        <Stack.Screen options={{ title: 'Go home' }}name="Img" component={ImgScreen} />
+        <Stack.Screen options={{ title: 'Go home' }} name="Img" component={ImgScreen} />
       </NativeStack.Navigator>
     </NavigationContainer>
   );
@@ -26,7 +28,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
