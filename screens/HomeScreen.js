@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   VirtualizedLists
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core'
 
 import FormButton from './components/FormButton';
 import Img from './components/Img';
@@ -26,6 +27,8 @@ const logo = {
 };
 
 const HomeScreen = () => {
+  const navigation = useNavigation()
+
   const [allQuizzes, setAllQuizzes] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
