@@ -27,22 +27,32 @@ const AddQuestionScreen = ({ navigation, route }) => {
     route.params.currentQuizTitle,
   );
 
+  const [title, setTitle] = useState('');
   const [question, setQuestion] = useState('');
   const [imageUri, setImageUri] = useState('');
+
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [optionTwo, setOptionTwo] = useState('');
   const [optionThree, setOptionThree] = useState('');
   const [optionFour, setOptionFour] = useState('');
 
+  const isNum = (val) => (/^(0|[1-9]\d*)(\.[0-9]*)?$/.test(val))
+
   const handleQuestionSave = async () => {
     if (
+      title == '' ||
       question == '' ||
+      !isNum(latitude) ||
+      !isNum(longitude) ||
       correctAnswer == '' ||
       optionTwo == '' ||
       optionThree == '' ||
       optionFour == ''
     ) {
+      ToastAndroid.show('input error', ToastAndroid.SHORT);
       return;
     }
 
@@ -68,7 +78,10 @@ const AddQuestionScreen = ({ navigation, route }) => {
 
     // Add question to db
     await createQuestion(currentQuizId, currentQuestionId, {
+      title: title,
       question: question,
+      latitude: latitude,
+      longitude: longitude,
       correct_answer: correctAnswer,
       incorrect_answers: [optionTwo, optionThree, optionFour],
       imageUrl: imageUrl,
@@ -76,7 +89,10 @@ const AddQuestionScreen = ({ navigation, route }) => {
     ToastAndroid.show('Question saved', ToastAndroid.SHORT);
 
     // Reset
+    setTitle('');
     setQuestion('');
+    setLatitude('');
+    setLongitude('');
     setCorrectAnswer('');
     setOptionTwo('');
     setOptionThree('');
@@ -116,6 +132,13 @@ const AddQuestionScreen = ({ navigation, route }) => {
           </Text>
 
           <FormInput
+            labelText="Title"
+            placeholderText="enter title"
+            onChangeText={val => setTitle(val)}
+            value={title}
+          />
+
+          <FormInput
             labelText="Question"
             placeholderText="enter question"
             onChangeText={val => setQuestion(val)}
@@ -144,6 +167,16 @@ const AddQuestionScreen = ({ navigation, route }) => {
 
           {/* Options */}
           <View style={{ marginTop: 30 }}>
+            <FormInput
+              labelText="Latitude"
+              onChangeText={val => setLatitude(val)}
+              value={latitude}
+            />
+            <FormInput
+              labelText="Longitude"
+              onChangeText={val => setLongitude(val)}
+              value={longitude}
+            />
             <FormInput
               labelText="Correct Answer"
               onChangeText={val => setCorrectAnswer(val)}
