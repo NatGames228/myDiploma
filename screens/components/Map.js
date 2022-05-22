@@ -1,35 +1,37 @@
-import * as React from 'react';
+import React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 import { COLORS } from '../../constants/theme';
 
-export default function App() {
+const Map = ({ point }) => {
+  const latitude = +point.latitude;
+  const longitude = +point.longitude;
   return (
     <View style={styles.container}>
       <MapView style={styles.map}
         initialRegion={{
-          latitude: 55.7983486,
-          // latitude: 55.7823547,
-          longitude: 49.1051597,
-          // longitude: 49.1242266,
+          latitude,
+          longitude,
           latitudeDelta: 0.0022,
           longitudeDelta: 0.0021,
         }}
       >
         <Marker
-          coordinate={{ latitude: 55.79840099276407, longitude: 49.10550120304926 }}
+          coordinate={{ latitude, longitude }}
           // image={{uri: 'custom_pin'}}
           pinColor="blue"
         >
           <Callout>
-            <Text>Kul Sharif</Text>
+            <Text>{point.title}</Text>
           </Callout>
         </Marker>
       </MapView>
     </View>
   );
 }
+
+export default Map;
 
 const styles = StyleSheet.create({
   container: {

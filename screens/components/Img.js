@@ -2,19 +2,21 @@ import React from 'react';
 import { TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 
-const Img = ({ logo }) => {
+const Img = ({ point }) => {
   const navigation = useNavigation()
-  
   return (
-    <TouchableOpacity 
-      onPress={() => navigation.navigate('Img', logo)}
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Img', point)}
       style={styles.container}
     >
-      <Image 
-      source={logo.source}
-      style={[styles.img, logo.available ? {opacity: 1} : {opacity: 0.5}]}
-    />
-      <Text style={{ fontSize: 25 }}>{logo.name}</Text>
+      <Image
+        source={{ uri: point.imageUrl }}
+        style={[
+          styles.img,
+          // point.available ? {opacity: 1} : {opacity: 0.5}
+        ]}
+      />
+      <Text style={{ fontSize: 25 }}>{point.title}</Text>
     </TouchableOpacity>
   )
 };
@@ -27,8 +29,8 @@ const styles = StyleSheet.create({
     // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
-    
+    marginTop: 10,
+    marginBottom: 10,
   },
   img: {
     width: 100,

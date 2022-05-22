@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/core'
 import FormButton from './components/FormButton';
 import Img from './components/Img';
 
-import { getQuizzes } from '../utils/database';
+import { getQuizzes, getQuestionsByQuizId, getQuizById } from '../utils/database';
 
 import { COLORS } from '../constants/theme';
 
@@ -49,10 +49,8 @@ const HomeScreen = () => {
   useEffect(() => {
     getAllQuizzes();
   }, []);
+
   return (
-
-    // <ScrollView backgroundColor={COLORS.white}>
-
     <SafeAreaView
       style={styles.container}>
       <StatusBar backgroundColor={COLORS.white} barStyle={'dark-content'} />
@@ -65,38 +63,84 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20 }}
         renderItem={({ item: quiz }) => (
-          <View
-            style={styles.item}>
-            <View style={{ flex: 1, paddingRight: 10 }}>
-              <Text style={{ fontSize: 18, color: COLORS.black }}>
-                {quiz.title}
-              </Text>
-              {quiz.description != '' ? (
-                <Text style={{ opacity: 0.5 }}>{quiz.description}</Text>
-              ) : null}
+          <>
+            <View
+              style={styles.item}
+            >
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Text style={{ fontSize: 18, color: COLORS.black }}>
+                  {quiz.title}
+                </Text>
+                {quiz.description != '' ? (
+                  <Text style={{ opacity: 0.5 }}>{quiz.description}</Text>
+                ) : null}
+              </View>
+              <TouchableOpacity
+                style={styles.touchableOpacity}
+                onPress={() => {
+                  navigation.navigate('PlayQuizScreen', {
+                    quizId: quiz.id,
+                  });
+                }}>
+                <Text style={{ color: COLORS.primary }}>Play</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={styles.touchableOpacity}
-              onPress={() => {
-                navigation.navigate('PlayQuizScreen', {
-                  quizId: quiz.id,
-                });
-              }}>
-              <Text style={{ color: COLORS.primary }}>Play</Text>
-            </TouchableOpacity>
-          </View>
+
+            {/* Points on the map */}
+            <Point currentQuizId={quiz.id} />
+          </>
         )}
       />
     </SafeAreaView>
+  )
+}
 
-    /* <Img logo={logo}/>
-    <Img logo={logo}/>
-    <Img logo={logo}/>
-    <Img logo={logo}/>
-    <Img logo={logo}/>
-    <Img logo={logo}/>
+const Point = ({ currentQuizId }) => {
+  const [title, setTitle] = useState('');
+  const [points, setPoints] = useState([]);
 
-  </ScrollView> */
+  const getQuizAndQuestionDetails = async () => {
+    // Get Quiz
+    let currentQuiz = await getQuizById(currentQuizId);
+    currentQuiz = currentQuiz.data();
+    setTitle(currentQuiz.title);
+
+    // Get Questions for current quiz
+    const points = await getQuestionsByQuizId(currentQuizId);
+
+    // Transform and shuffle options
+    let tempQuestions = [];
+    await points.docs.forEach(async res => {
+      let question = res.data();
+
+      // img question
+      if (!question.imageUrl) {
+        question.imageUrl = 'https://img3.stcrm.it/images/22898928/2500x/annunciomymoto.jpeg'
+      }
+
+      // Create Single array of all options and shuffle it
+      question.allOptions = [
+        ...question.incorrect_answers,
+        question.correct_answer,
+      ];
+      await tempQuestions.push(question);
+    });
+
+    setPoints([...tempQuestions]);
+  };
+
+  useEffect(() => {
+    getQuizAndQuestionDetails();
+  }, []);
+
+  return (
+    <FlatList
+      data={points}
+      keyExtractor={item => item.question}
+      renderItem={({ item, index }) => (
+        <Img point={item} />
+      )}
+    />
   )
 }
 

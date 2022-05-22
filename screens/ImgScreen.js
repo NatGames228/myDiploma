@@ -6,15 +6,15 @@ import Map from './components/Map';
 import { COLORS } from '../constants/theme';
 
 const ImgScreen = ({ route, navigation }) => {
-  const logo = route.params;
+  const point = route.params;
   return (
     <ScrollView backgroundColor={COLORS.white}>
       <Image
-        source={logo.source}
+        source={{ uri: point.imageUrl }}
         style={styles.img}
       />
-      <Text style={styles.text}>{logo.text}</Text>
-      <Map />
+      <Text style={styles.text}>{point.question}</Text>
+      <Map point={point} />
     </ScrollView>
 
   )
