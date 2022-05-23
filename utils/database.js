@@ -1,9 +1,10 @@
 import { firestore } from './firebase';
 
-export const createQuiz = (currentQuizId, title, description) => {
+export const createQuiz = (currentQuizId, title, description, imageUrl) => {
   return firestore.collection('Quizzes').doc(currentQuizId).set({
     title,
     description,
+    imageUrl,
   });
 };
 

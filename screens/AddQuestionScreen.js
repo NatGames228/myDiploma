@@ -28,12 +28,13 @@ const AddQuestionScreen = ({ navigation, route }) => {
   );
 
   const [title, setTitle] = useState('');
-  const [question, setQuestion] = useState('');
+  const [description, setDescription] = useState('');
   const [imageUri, setImageUri] = useState('');
 
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
+  const [question, setQuestion] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [optionTwo, setOptionTwo] = useState('');
   const [optionThree, setOptionThree] = useState('');
@@ -44,9 +45,10 @@ const AddQuestionScreen = ({ navigation, route }) => {
   const handleQuestionSave = async () => {
     if (
       title == '' ||
-      question == '' ||
+      description == '' ||
       !isNum(latitude) ||
       !isNum(longitude) ||
+      question == '' ||
       correctAnswer == '' ||
       optionTwo == '' ||
       optionThree == '' ||
@@ -79,9 +81,10 @@ const AddQuestionScreen = ({ navigation, route }) => {
     // Add question to db
     await createQuestion(currentQuizId, currentQuestionId, {
       title: title,
-      question: question,
+      description: description,
       latitude: latitude,
       longitude: longitude,
+      question: question,
       correct_answer: correctAnswer,
       incorrect_answers: [optionTwo, optionThree, optionFour],
       imageUrl: imageUrl,
@@ -90,9 +93,10 @@ const AddQuestionScreen = ({ navigation, route }) => {
 
     // Reset
     setTitle('');
-    setQuestion('');
+    setDescription('');
     setLatitude('');
     setLongitude('');
+    setQuestion('');
     setCorrectAnswer('');
     setOptionTwo('');
     setOptionThree('');
@@ -139,34 +143,35 @@ const AddQuestionScreen = ({ navigation, route }) => {
           />
 
           <FormInput
-            labelText="Question"
-            placeholderText="enter question"
-            onChangeText={val => setQuestion(val)}
-            value={question}
+            labelText="Description"
+            placeholderText="enter description"
+            onChangeText={val => setDescription(val)}
+            value={description}
           />
 
           {/* Image upload */}
+          {
+            imageUri == '' ? (
+              <TouchableOpacity
+                style={styles.addImage}
+                onPress={selectImage}>
+                <Text style={{ opacity: 0.5, color: COLORS.primary }}>
+                  + add image
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <Image
+                source={{
+                  uri: imageUri,
+                }}
+                resizeMode={'cover'}
+                style={styles.image}
+              />
+            )
+          }
 
-          {imageUri == '' ? (
-            <TouchableOpacity
-              style={styles.addImage}
-              onPress={selectImage}>
-              <Text style={{ opacity: 0.5, color: COLORS.primary }}>
-                + add image
-              </Text>
-            </TouchableOpacity>
-          ) : (
-            <Image
-              source={{
-                uri: imageUri,
-              }}
-              resizeMode={'cover'}
-              style={styles.image}
-            />
-          )}
-
-          {/* Options */}
-          <View style={{ marginTop: 30 }}>
+          <View style={{ marginTop: 20 }}>
+            {/* Coordinates */}
             <FormInput
               labelText="Latitude"
               onChangeText={val => setLatitude(val)}
@@ -176,6 +181,14 @@ const AddQuestionScreen = ({ navigation, route }) => {
               labelText="Longitude"
               onChangeText={val => setLongitude(val)}
               value={longitude}
+            />
+
+            {/* Question & Options */}
+            <FormInput
+              labelText="Question"
+              placeholderText="enter question"
+              onChangeText={val => setQuestion(val)}
+              value={question}
             />
             <FormInput
               labelText="Correct Answer"
@@ -198,6 +211,7 @@ const AddQuestionScreen = ({ navigation, route }) => {
               value={optionFour}
             />
           </View>
+
           <FormButton
             labelText="Save Question"
             handleOnPress={handleQuestionSave}
