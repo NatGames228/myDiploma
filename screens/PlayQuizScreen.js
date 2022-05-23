@@ -106,7 +106,7 @@ const PlayQuizScreen = ({ navigation, route }) => {
         <Ionicons name="arrow-back" size={24} onPress={() => navigation.goBack()} />
 
         {/* Title */}
-        <Text style={{ fontSize: 16, marginLeft: 10 }}>{title}</Text>
+        <Text style={styles.topBarText}>{title}</Text>
 
         {/* Correct and incorrect count */}
         <View
@@ -237,10 +237,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     backgroundColor: COLORS.white,
     elevation: 4,
+  },
+  topBarText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
   viewCount: {
     flexDirection: 'row',
