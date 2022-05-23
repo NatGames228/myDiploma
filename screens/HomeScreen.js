@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/core'
 
 import { getQuizzes } from '../utils/database';
 
-import { COLORS } from '../constants/theme';
+import { COLORS, IMAGES } from '../constants/theme';
 
 const HomeScreen = () => {
   const navigation = useNavigation()
@@ -55,7 +55,7 @@ const HomeScreen = () => {
           <>
             <View style={styles.item}>
               <Image
-                source={{ uri: 'https://avatars.mds.yandex.net/i?id=151466b6e2052cdeed45a0ad67beebec-5869219-images-thumbs&ref=rim&n=33&w=225&h=225' }}
+                source={{ uri: quiz.imageUrl ? quiz.imageUrl : IMAGES.noAvatar }}
                 style={{ width: 60, height: 60, borderRadius: 30, marginRight: 20 }}
               />
               <View style={{ flex: 1, paddingRight: 10 }}>

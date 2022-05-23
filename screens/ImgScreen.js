@@ -3,7 +3,7 @@ import { TouchableOpacity, Image, StyleSheet, ScrollView, Text } from 'react-nat
 
 import Map from './components/Map';
 
-import { COLORS } from '../constants/theme';
+import { COLORS, SIZES } from '../constants/theme';
 
 const ImgScreen = ({ route, navigation }) => {
   const point = route.params;
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
 
   },
   img: {
-    width: '100%',
-    height: 200,
+    width: SIZES.width,
+    height: SIZES.width / 4 * 3,
     marginBottom: 15,
   },
   text: {

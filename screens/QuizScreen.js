@@ -12,10 +12,10 @@ import FormButton from './components/FormButton';
 
 import { getQuizzes, getQuestionsByQuizId, getQuizById } from '../utils/database';
 
-import { COLORS } from '../constants/theme';
+import { COLORS, SIZES, IMAGES } from '../constants/theme';
 
 const QuizScreen = ({ navigation, route }) => {
-  const { title, id, description } = route.params;
+  const { title, id, description, imageUrl } = route.params;
   const [points, setPoints] = useState([]);
 
   navigation.setOptions({ title })
@@ -31,7 +31,7 @@ const QuizScreen = ({ navigation, route }) => {
 
       // img question
       if (!question.imageUrl) {
-        question.imageUrl = 'https://img3.stcrm.it/images/22898928/2500x/annunciomymoto.jpeg'
+        question.imageUrl = IMAGES.noImage;
       }
 
       // Create Single array of all options and shuffle it
@@ -53,10 +53,14 @@ const QuizScreen = ({ navigation, route }) => {
   // console.log(points)
   return (
     <ScrollView>
-      <Image
-        source={{ uri: 'https://img3.stcrm.it/images/22898928/2500x/annunciomymoto.jpeg' }}
-        style={styles.img}
-      />
+      {
+        imageUrl ?
+          <Image
+            source={{ uri: imageUrl }}
+            style={styles.img}
+          /> : 
+          null
+      }
       <View style={styles.container}>
         <Text>
           123
@@ -93,8 +97,8 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   img: {
-    width: '100%',
-    height: 200,
+    width: SIZES.width,
+    height: SIZES.width / 4 * 3,
     marginBottom: 15,
   },
   btn: {

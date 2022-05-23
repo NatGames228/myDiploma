@@ -19,3 +19,8 @@ export const SIZES = {
   width,
   height,
 };
+
+export const IMAGES = {
+  noAvatar: 'https://avatars.mds.yandex.net/i?id=151466b6e2052cdeed45a0ad67beebec-5869219-images-thumbs&ref=rim&n=33&w=225&h=225',
+  noImage: 'https://img3.stcrm.it/images/22898928/2500x/annunciomymoto.jpeg',
+}
