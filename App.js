@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, LogBox } from 'react-native';
+import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import ImgScreen from './screens/ImgScreen';
 import MainContainer from './screens/MainContainer';
+import QuizScreen from './screens/QuizScreen';
 import AddQuestionScreen from './screens/AddQuestionScreen';
 import PlayQuizScreen from './screens/PlayQuizScreen';
 
@@ -25,7 +26,8 @@ export default function App() {
       <NativeStack.Navigator>
         <NativeStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <NativeStack.Screen options={{ headerShown: false }} name="Main" component={MainContainer} />
-        <Stack.Screen options={{ title: 'Go home' }} name="Img" component={ImgScreen} />
+        <Stack.Screen options={styles.quiz} name="Img" component={ImgScreen} />
+        <Stack.Screen options={styles.quiz} name="QuizScreen" component={QuizScreen} />
         <Stack.Screen options={{ headerShown: false }} name="AddQuestionScreen" component={AddQuestionScreen} />
         <Stack.Screen options={{ headerShown: false }} name="PlayQuizScreen" component={PlayQuizScreen} />
       </NativeStack.Navigator>
@@ -33,11 +35,15 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = {
+  quiz: {
+    title: 'Go back',
+    headerStyle: { backgroundColor: COLORS.primary },
+    headerTintColor: COLORS.white,
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 30
+    },
+    headerTitleAlign: 'center'
+  }
+};

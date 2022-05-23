@@ -4,27 +4,16 @@ import {
   Text,
   SafeAreaView,
   StatusBar,
-  ScrollView,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  VirtualizedLists
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 
-import FormButton from './components/FormButton';
-import Img from './components/Img';
-
-import { getQuizzes, getQuestionsByQuizId, getQuizById } from '../utils/database';
+import { getQuizzes } from '../utils/database';
 
 import { COLORS } from '../constants/theme';
-
-const logo = {
-  source: { uri: 'https://www.culture.ru/storage/images/4ed2740a-90c7-58d1-a244-092f28e7b7ac' },
-  name: 'Kul Sharif',
-  text: 'The Kul Sharif Mosque located in Kazan Kremlin, was reputed to be – at the time of its construction – one of the largest mosques in Russia, and in Europe outside of Istanbul.',
-  available: true
-};
 
 const HomeScreen = () => {
   const navigation = useNavigation()
@@ -64,9 +53,11 @@ const HomeScreen = () => {
         style={{ paddingVertical: 20 }}
         renderItem={({ item: quiz }) => (
           <>
-            <View
-              style={styles.item}
-            >
+            <View style={styles.item}>
+              <Image
+                source={{ uri: 'https://avatars.mds.yandex.net/i?id=151466b6e2052cdeed45a0ad67beebec-5869219-images-thumbs&ref=rim&n=33&w=225&h=225' }}
+                style={{ width: 60, height: 60, borderRadius: 30, marginRight: 20 }}
+              />
               <View style={{ flex: 1, paddingRight: 10 }}>
                 <Text style={{ fontSize: 18, color: COLORS.black }}>
                   {quiz.title}
@@ -77,70 +68,15 @@ const HomeScreen = () => {
               </View>
               <TouchableOpacity
                 style={styles.touchableOpacity}
-                onPress={() => {
-                  navigation.navigate('PlayQuizScreen', {
-                    quizId: quiz.id,
-                  });
-                }}>
+                onPress={() => { navigation.navigate('QuizScreen', quiz) }}
+              >
                 <Text style={{ color: COLORS.primary }}>Play</Text>
               </TouchableOpacity>
             </View>
-
-            {/* Points on the map */}
-            <Point currentQuizId={quiz.id} />
           </>
         )}
       />
     </SafeAreaView>
-  )
-}
-
-const Point = ({ currentQuizId }) => {
-  const [title, setTitle] = useState('');
-  const [points, setPoints] = useState([]);
-
-  const getQuizAndQuestionDetails = async () => {
-    // Get Quiz
-    let currentQuiz = await getQuizById(currentQuizId);
-    currentQuiz = currentQuiz.data();
-    setTitle(currentQuiz.title);
-
-    // Get Questions for current quiz
-    const points = await getQuestionsByQuizId(currentQuizId);
-
-    // Transform and shuffle options
-    let tempQuestions = [];
-    await points.docs.forEach(async res => {
-      let question = res.data();
-
-      // img question
-      if (!question.imageUrl) {
-        question.imageUrl = 'https://img3.stcrm.it/images/22898928/2500x/annunciomymoto.jpeg'
-      }
-
-      // Create Single array of all options and shuffle it
-      question.allOptions = [
-        ...question.incorrect_answers,
-        question.correct_answer,
-      ];
-      await tempQuestions.push(question);
-    });
-
-    setPoints([...tempQuestions]);
-  };
-
-  useEffect(() => {
-    getQuizAndQuestionDetails();
-  }, []);
-
-  return (
-    <FlatList
-      data={points}
-      keyExtractor={item => item.question}
-      renderItem={({ item, index }) => (
-        <Img point={item} />
-      )}
-    />
   )
 }
 
