@@ -53,9 +53,9 @@ function MainContainer() {
     >
 
       <Tab.Screen options={{ headerShown: false }} name={homeName} component={HomeScreen} />
-      <Tab.Screen name={detailsName} component={DetailsScreen} />
+      <Tab.Screen options={{ headerShown: false }} name={detailsName} component={DetailsScreen} />
       <Tab.Screen options={{ headerShown: false }} name={createQuizName} component={CreateQuizScreen} />
-      <Tab.Screen name={settingsName} component={SettingsScreen} />
+      <Tab.Screen options={{ headerShown: false }} name={settingsName} component={SettingsScreen} />
 
     </Tab.Navigator>
   );

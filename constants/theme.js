@@ -10,6 +10,10 @@ export const COLORS = {
 
   black: '#171717',
   white: '#FFFFFF',
+  gold: '#FFD700',
+  silver: '#C0C0C0',
+  bronze: '#8C7853',
+
   background: '#f4f4f4',
   border: '#F5F5F7',
 };
