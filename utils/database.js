@@ -1,5 +1,44 @@
 import { firestore } from './firebase';
 
+//* Users
+export const createUser = (uid, name, imageUrl) => {
+  return firestore.collection('Users').doc(uid).set({
+    uid,
+    name,
+    imageUrl,
+  });
+};
+
+// Create new question for current quiz
+export const addQuizForUser = (uid, currentQuizId, data) => {
+  return firestore
+    .collection('Users')
+    .doc(uid)
+    .collection('Quizzes')
+    .doc(currentQuizId)
+    .set(data);
+};
+
+// Get All Users
+export const getUsers = () => {
+  return firestore.collection('Users').get();
+};
+
+// Get Users Details by id
+export const getUserById = uid => {
+  return firestore.collection('Users').doc(uid).get();
+};
+
+// Get data of user by uid
+export const getDataByUid = uid => {
+  return firestore
+    .collection('Users')
+    .doc(uid)
+    .collection('Quizzes')
+    .get();
+};
+
+//* Quizzes
 export const createQuiz = (currentQuizId, title, description, imageUrl) => {
   return firestore.collection('Quizzes').doc(currentQuizId).set({
     title,

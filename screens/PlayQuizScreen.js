@@ -15,6 +15,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ResultModal from './components/ResultModal';
 import FormButton from './components/FormButton';
 
+import { auth } from '../utils/firebase'
+import { addQuizForUser } from '../utils/database'
+
 import { COLORS } from '../constants/theme';
 
 const PlayQuizScreen = ({ navigation, route }) => {
@@ -61,6 +64,14 @@ const PlayQuizScreen = ({ navigation, route }) => {
     });
 
     setQuestions([...tempQuestions]);
+  };
+
+  const pushDataInDb = async () => {   
+    await addQuizForUser(auth.currentUser?.uid, currentQuizId, {
+      correctCount,
+      incorrectCount,
+      total: questions.length
+    })
   };
 
   useEffect(() => {
@@ -220,10 +231,12 @@ const PlayQuizScreen = ({ navigation, route }) => {
           setIncorrectCount(0);
           getQuizAndQuestionDetails();
           setIsResultModalVisible(false);
+          pushDataInDb();
         }}
         handleHome={() => {
           navigation.goBack();
           setIsResultModalVisible(false);
+          pushDataInDb();
         }}
       />
     </SafeAreaView>

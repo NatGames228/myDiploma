@@ -1,8 +1,16 @@
 import { useNavigation } from '@react-navigation/core'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  StyleSheet, Text,
+  TextInput,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import { auth } from '../utils/firebase'
+import { createUser } from '../utils/database'
 
 import { COLORS } from '../constants/theme'
 
@@ -25,11 +33,13 @@ const LoginScreen = () => {
   const handleSingUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
+      .then(async (userCredentials) => {
         const user = userCredentials.user;
+        await createUser(user.uid, 'name', 'uri')
         console.log('Registered with', user.email);
+        console.log('uid', user.uid);
       })
-      .catch(error => alert(error.message))
+      .catch(error => ToastAndroid.show(error.message, ToastAndroid.SHORT))
   }
 
   const handleLogin = () => {
@@ -38,9 +48,9 @@ const LoginScreen = () => {
       .then(userCredentials => {
         const user = userCredentials.user;
         console.log('Logged in with: ', user.email);
+        console.log('uid', user.uid);
       })
-      .catch(error => alert(error.message))
-
+      .catch(error => ToastAndroid.show(error.message, ToastAndroid.SHORT))
   }
 
   return (
