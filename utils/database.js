@@ -38,6 +38,16 @@ export const getDataByUid = uid => {
     .get();
 };
 
+// Get data of user by uid and quizId
+export const getDataByUidAndQuizId = (uid, currentQuizId) => {
+  return firestore
+    .collection('Users')
+    .doc(uid)
+    .collection('Quizzes')
+    .doc(currentQuizId)
+    .get();
+};
+
 //* Quizzes
 export const createQuiz = (currentQuizId, title, description, imageUrl) => {
   return firestore.collection('Quizzes').doc(currentQuizId).set({

@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 
-import { getQuizzes } from '../utils/database';
+import { auth } from '../utils/firebase'
+import { getQuizzes, getDataByUidAndQuizId } from '../utils/database';
 
 import { COLORS, IMAGES } from '../constants/theme';
 
@@ -27,9 +28,12 @@ const HomeScreen = () => {
 
     // Transform quiz data
     let tempQuizzes = [];
-    await quizzes.docs.forEach(async quiz => {
-      await tempQuizzes.push({ id: quiz.id, ...quiz.data() });
-    });
+    for (quiz of quizzes.docs) {
+      const userQuizzes = await getDataByUidAndQuizId(auth.currentUser?.uid, quiz.id);
+      const userInfo = userQuizzes.data()
+      await tempQuizzes.push({ id: quiz.id, userInfo, ...quiz.data() });
+    }
+
     await setAllQuizzes([...tempQuizzes]);
 
     setRefreshing(false);
@@ -62,9 +66,13 @@ const HomeScreen = () => {
                 <Text style={{ fontSize: 18, color: COLORS.black }}>
                   {quiz.title}
                 </Text>
-                {quiz.description != '' ? (
-                  <Text style={{ opacity: 0.5 }}>{quiz.description}</Text>
-                ) : null}
+                {
+                  quiz.userInfo ? (
+                    <Text style={{ opacity: 0.5 }}>
+                      {quiz.userInfo.correctCount}/{quiz.userInfo.total}
+                    </Text>
+                  ) : null
+                }
               </View>
               <TouchableOpacity
                 style={styles.touchableOpacity}
