@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import {
-  KeyboardAvoidingView,
   StyleSheet, Text,
   TextInput,
   ToastAndroid,
@@ -41,7 +40,7 @@ const LoginScreen = () => {
   }
 
   return (
-    <KeyboardAvoidingView
+    <View
       style={styles.container}
       behavior="padding"
     >
@@ -78,7 +77,7 @@ const LoginScreen = () => {
           <Text onPress={() => navigation.navigate('Registration')} style={styles.footerLink}> Sign up</Text>
         </Text>
       </View>
-    </KeyboardAvoidingView >
+    </View >
   )
 }
 
@@ -89,7 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   inputContainer: {
     width: '80%',
@@ -114,19 +112,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  buttonOutline: {
-    backgroundColor: COLORS.white,
-    marginTop: 5,
-    borderColor: COLORS.primary,
-    borderWidth: 2,
-  },
   buttonText: {
     color: COLORS.white,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: COLORS.primary,
     fontWeight: '700',
     fontSize: 16,
   },

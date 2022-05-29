@@ -77,7 +77,6 @@ const DetailsScreen = () => {
       return 0;
     })
 
-    console.log(auth.currentUser)
     setAllUsers([...tempUsers])
   }
 

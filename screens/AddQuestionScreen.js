@@ -124,7 +124,7 @@ const AddQuestionScreen = ({ navigation, route }) => {
       <ScrollView
         style={{
           flex: 1,
-          backgroundColor: COLORS.white,
+          backgroundColor: COLORS.background,
         }}>
         <View style={{ padding: 20 }}>
           <Text
@@ -137,16 +137,16 @@ const AddQuestionScreen = ({ navigation, route }) => {
 
           <FormInput
             labelText="Title"
-            placeholderText="enter title"
             onChangeText={val => setTitle(val)}
             value={title}
           />
 
           <FormInput
             labelText="Description"
-            placeholderText="enter description"
             onChangeText={val => setDescription(val)}
             value={description}
+            multiline
+            numberOfLines={4}
           />
 
           {/* Image upload */}
@@ -186,7 +186,6 @@ const AddQuestionScreen = ({ navigation, route }) => {
             {/* Question & Options */}
             <FormInput
               labelText="Question"
-              placeholderText="enter question"
               onChangeText={val => setQuestion(val)}
               value={question}
             />
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   addQuestion: {
     fontSize: 20, textAlign: 'center', color: COLORS.black

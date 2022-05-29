@@ -14,7 +14,6 @@ import { auth } from '../utils/firebase'
 import { getUserById, } from '../utils/database';
 
 import { COLORS, IMAGES, SIZES } from '../constants/theme'
-import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 const SettingsScreen = () => {
   const [user, setUser] = useState({})
@@ -40,13 +39,16 @@ const SettingsScreen = () => {
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [user]);
 
   return (
     <ScrollView>
       <View style={styles.imgContainer}>
         <Image
-          source={{ uri: IMAGES.noAvatar }}
+          source={{
+            uri:
+              user.imageUrl ? user.imageUrl : IMAGES.noAvatar
+          }}
           style={styles.img}
         />
         <Text style={styles.name}>{user.name}</Text>
@@ -56,10 +58,28 @@ const SettingsScreen = () => {
       </View>
 
       <View style={styles.optionsContainer}>
-        <Option iconName='person' text='Profile' cb={handleSignOut} arrow={true} />
-        <Option iconName='mail' text='Email address' cb={handleSignOut} arrow={true} />
-        <Option iconName='lock-open' text='Password' cb={handleSignOut} arrow={true} />
-        <Option iconName='log-out' text='Sign out' cb={handleSignOut} />
+        <Option
+          iconName='person'
+          text='Profile'
+          cb={() => navigation.navigate('EditProfileScreen', user)}
+          arrow={true}
+        />
+        <Option
+          iconName='mail'
+          text='Email address'
+          cb={handleSignOut}
+          arrow={true}
+        />
+        <Option
+          iconName='lock-open'
+          text='Password'
+          cb={handleSignOut}
+          arrow={true} />
+        <Option
+          iconName='log-out'
+          text='Sign out'
+          cb={handleSignOut}
+        />
       </View>
     </ScrollView>
   )

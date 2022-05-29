@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import {
-  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -59,7 +58,7 @@ const RegistrationScreen = () => {
           imageUrl = await reference.getDownloadURL();
         }
 
-        await createUser(user.uid, name, imageUri, 'user')
+        await createUser(user.uid, name, imageUri)
         console.log('Registered with:', user.email);
         console.log('uid:', user.uid);
       })
@@ -81,7 +80,7 @@ const RegistrationScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
+    <View
       style={styles.container}
       behavior="padding"
     >
@@ -135,7 +134,7 @@ const RegistrationScreen = () => {
           <Text onPress={() => navigation.goBack()} style={styles.footerLink}> Log in</Text>
         </Text>
       </View>
-    </KeyboardAvoidingView >
+    </View>
   )
 }
 
@@ -144,13 +143,14 @@ export default RegistrationScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   img: {
     width: 120,
     height: 120,
     borderRadius: 100,
-    margin: 30,
+    marginBottom: 30,
   },
   inputContainer: {
     width: '80%',
@@ -175,26 +175,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  buttonOutline: {
-    backgroundColor: COLORS.white,
-    marginTop: 5,
-    borderColor: COLORS.primary,
-    borderWidth: 2,
-  },
   buttonText: {
     color: COLORS.white,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: COLORS.primary,
     fontWeight: '700',
     fontSize: 16,
   },
   footerView: {
     justifyContent: 'center',
     alignItems: "center",
-    marginTop: 15,
+    margin: 20,
   },
   footerText: {
     fontSize: 16,

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
   Text,
-  SafeAreaView,
   StyleSheet,
+  ScrollView,
+  View,
   TouchableOpacity,
   ToastAndroid,
   Image,
@@ -57,10 +58,14 @@ const CreateQuizScreen = ({ navigation }) => {
     });
 
     // Reset
+    clear();
+    ToastAndroid.show('Quiz Saved', ToastAndroid.SHORT);
+  };
+
+  const clear = () => {
     setTitle('');
     setDescription('');
     setImageUri('');
-    ToastAndroid.show('Quiz Saved', ToastAndroid.SHORT);
   };
 
   const selectImage = async () => {
@@ -78,8 +83,7 @@ const CreateQuizScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView
-      style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text
         style={styles.createQuiz}>
         Create Quiz
@@ -87,15 +91,15 @@ const CreateQuizScreen = ({ navigation }) => {
 
       <FormInput
         labelText="Title"
-        placeholderText="enter quiz title"
         onChangeText={val => setTitle(val)}
         value={title}
       />
       <FormInput
         labelText="Description"
-        placeholderText="enter quiz description"
         onChangeText={val => setDescription(val)}
         value={description}
+        multiline
+        numberOfLines={4}
       />
 
       {/* Image upload */}
@@ -119,20 +123,22 @@ const CreateQuizScreen = ({ navigation }) => {
         )
       }
 
-      <FormButton labelText="Save Quiz" handleOnPress={handleQuizSave} />
+      {/* Buttons */}
+      <View style={styles.buttonContainer}>
+        <FormButton
+          labelText="Calsel"
+          style={{ width: '45%'}}
+          isPrimary={false}
+          handleOnPress={clear}
+        />
+        <FormButton
+          labelText="Save Quiz"
+          handleOnPress={handleQuizSave}
+          style={{width: '45%'}}
+        />
+      </View>
 
-      {/* Temporary button - navigate without saving quiz */}
-      <FormButton
-        labelText="Navigate to AddQuestionScreen"
-        style={{ marginVertical: 20 }}
-        handleOnPress={() => {
-          navigation.navigate('AddQuestionScreen', {
-            currentQuizId: '123456',
-            currentQuizTitle: 'Test title',
-          });
-        }}
-      />
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -141,7 +147,6 @@ export default CreateQuizScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
     padding: 20,
   },
   createQuiz: {
@@ -163,5 +168,10 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 5,
     marginBottom: 20,
-  }
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 })

@@ -1,12 +1,12 @@
 import { firestore } from './firebase';
 
 //* Users
-export const createUser = (uid, name, imageUrl, role) => {
+export const createUser = (uid, name, imageUrl) => {
   return firestore.collection('Users').doc(uid).set({
     uid,
     name,
     imageUrl,
-    role
+    role: 'user'
   });
 };
 

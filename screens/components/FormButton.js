@@ -19,7 +19,7 @@ const FormButton = ({
           ...style,
         }
       ]}
-      activeOpacity={0.9}
+      activeOpacity={0.7}
       onPress={handleOnPress}
       {...more}>
       <Text
@@ -38,12 +38,13 @@ export default FormButton;
 const styles = StyleSheet.create({
   touchableOpacity: {
     paddingVertical: 10,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: COLORS.primary,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   text: {
     textAlign: 'center',
     fontSize: 18,
+    fontWeight: 'bold',
   }
 });
