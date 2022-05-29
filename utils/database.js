@@ -1,11 +1,12 @@
 import { firestore } from './firebase';
 
 //* Users
-export const createUser = (uid, name, imageUrl) => {
+export const createUser = (uid, name, imageUrl, role) => {
   return firestore.collection('Users').doc(uid).set({
     uid,
     name,
     imageUrl,
+    role
   });
 };
 
@@ -75,7 +76,11 @@ export const getQuizzes = () => {
 // Get Quiz Details by id
 export const getQuizById = currentQuizId => {
   return firestore.collection('Quizzes').doc(currentQuizId).get();
-};
+  };
+
+export const getQuizById2 = currentQuizId => {
+  return firestore.collection('Quizzes').doc('123456');
+  };
 
 // Get Questions by currentQuizId
 export const getQuestionsByQuizId = currentQuizId => {

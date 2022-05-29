@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from './screens/LoginScreen';
+import RegistrationScreen from './screens/RegistrationScreen';
 import ImgScreen from './screens/ImgScreen';
 import MainContainer from './screens/MainContainer';
 import QuizScreen from './screens/QuizScreen';
@@ -24,7 +25,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeStack.Navigator>
-        <NativeStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+        <NativeStack.Screen options={styles.quiz} name="Login" component={LoginScreen} />
+        <Stack.Screen options={styles.quiz} name="Registration" component={RegistrationScreen} />
         <NativeStack.Screen options={{ headerShown: false }} name="Main" component={MainContainer} />
         <Stack.Screen options={styles.quiz} name="Img" component={ImgScreen} />
         <Stack.Screen options={styles.quiz} name="QuizScreen" component={QuizScreen} />
@@ -37,7 +39,6 @@ export default function App() {
 
 const styles = {
   quiz: {
-    title: 'Go back',
     headerStyle: { backgroundColor: COLORS.primary },
     headerTintColor: COLORS.white,
     headerTitleStyle: {

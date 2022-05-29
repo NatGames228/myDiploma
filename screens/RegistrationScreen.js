@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import {
   KeyboardAvoidingView,
-  StyleSheet, Text,
+  StyleSheet,
+  Text,
   TextInput,
   ToastAndroid,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 
-import { auth } from '../utils/firebase'
+import { auth, storage } from '../utils/firebase'
+import { createUser } from '../utils/database'
 
-import { COLORS } from '../constants/theme'
+import { COLORS, IMAGES } from '../constants/theme'
 
-const LoginScreen = () => {
+const RegistrationScreen = () => {
+  const [imageUri, setImageUri] = useState('')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -21,32 +27,83 @@ const LoginScreen = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
+      if (user && name) {
         navigation.replace("Main")
       }
     })
-
     return unsubscribe
   }, [])
 
-  const handleLogin = () => {
+  const handleSingUp = () => {
+    if (name == '') {
+      ToastAndroid.show('input error', ToastAndroid.SHORT);
+      return;
+    }
     auth
-      .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
+      .createUserWithEmailAndPassword(email, password)
+      .then(async (userCredentials) => {
         const user = userCredentials.user;
-        console.log('Logged in with: ', user.email);
+
+        let imageUrl = '';
+
+        if (imageUri != '') {
+          const responce = await fetch(imageUri);
+          const blob = await responce.blob();
+
+          const reference = storage.ref().child(
+            `/images/users/${user.uid}`,
+          );
+          await reference.put(blob).then(() => {
+            console.log('Image Uploaded');
+          })
+          imageUrl = await reference.getDownloadURL();
+        }
+
+        await createUser(user.uid, name, imageUri, 'user')
+        console.log('Registered with:', user.email);
         console.log('uid:', user.uid);
       })
       .catch(error => ToastAndroid.show(error.message, ToastAndroid.SHORT))
   }
+
+  const selectImage = async () => {
+    let result = await launchImageLibraryAsync(
+      {
+        mediaType: MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      }
+    );
+    if (!result.cancelled) {
+      setImageUri(result.uri);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
     >
-    {/* Inputs */}
+      {/* Image */}
+      <TouchableOpacity onPress={selectImage}>
+        <Image
+          source={{
+            uri:
+              imageUri ? imageUri : IMAGES.noAvatar
+          }}
+          style={styles.img}
+        />
+      </TouchableOpacity>
+
+      {/* Inputs */}
       <View style={styles.inputContainer}>
+        <TextInput
+          placeholder='Full Name'
+          value={name}
+          onChangeText={text => setName(text)}
+          style={styles.input}
+        />
         <TextInput
           placeholder='Email'
           value={email}
@@ -65,31 +122,35 @@ const LoginScreen = () => {
       {/* Button */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={handleLogin}
+          onPress={handleSingUp}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Log in</Text>
+          <Text style={styles.buttonText}>Create account</Text>
         </TouchableOpacity>
 
-      {/* Sing up */}
+      {/* Log in */}
       </View>
       <View style={styles.footerView}>
         <Text style={styles.footerText}>Don't have an account?
-          <Text onPress={() => navigation.navigate('Registration')} style={styles.footerLink}> Sign up</Text>
+          <Text onPress={() => navigation.goBack()} style={styles.footerLink}> Log in</Text>
         </Text>
       </View>
     </KeyboardAvoidingView >
   )
 }
 
-export default LoginScreen
+export default RegistrationScreen
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-
+  },
+  img: {
+    width: 120,
+    height: 120,
+    borderRadius: 100,
+    margin: 30,
   },
   inputContainer: {
     width: '80%',
