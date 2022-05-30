@@ -32,7 +32,7 @@ const EditProfileScreen = ({ route, navigation }) => {
 
     let imageUrl = '';
 
-    if (imageUri != '') {
+    if (imageUri != '' && imageUri != user.imageUrl) {
       const responce = await fetch(imageUri);
       const blob = await responce.blob();
 
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    marginBottom: 20,
   },
   buttonContainer: {
     width: '80%',

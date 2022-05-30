@@ -12,6 +12,8 @@ import QuizScreen from './screens/QuizScreen';
 import AddQuestionScreen from './screens/AddQuestionScreen';
 import PlayQuizScreen from './screens/PlayQuizScreen';
 import EditProfileScreen from './screens/EditProfileScreen';
+import ChangeEmailScreen from './screens/ChangeEmailScreen';
+import ChangePasswordScreen from './screens/ChangePasswordScreen';
 
 import { COLORS } from './constants/theme'
 
@@ -34,6 +36,8 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="AddQuestionScreen" component={AddQuestionScreen} />
         <Stack.Screen options={{ headerShown: false }} name="PlayQuizScreen" component={PlayQuizScreen} />
         <Stack.Screen options={styles.quiz} name="EditProfileScreen" component={EditProfileScreen} />
+        <Stack.Screen options={styles.quiz} name="ChangeEmailScreen" component={ChangeEmailScreen} />
+        <Stack.Screen options={styles.quiz} name="ChangePasswordScreen" component={ChangePasswordScreen} />
       </NativeStack.Navigator>
     </NavigationContainer>
   );

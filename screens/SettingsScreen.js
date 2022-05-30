@@ -39,7 +39,7 @@ const SettingsScreen = () => {
 
   useEffect(() => {
     getUserInfo();
-  }, [user]);
+  }, []);
 
   return (
     <ScrollView>
@@ -67,13 +67,13 @@ const SettingsScreen = () => {
         <Option
           iconName='mail'
           text='Email address'
-          cb={handleSignOut}
+          cb={() => navigation.navigate('ChangeEmailScreen')}
           arrow={true}
         />
         <Option
           iconName='lock-open'
           text='Password'
-          cb={handleSignOut}
+          cb={() => navigation.navigate('ChangePasswordScreen')}
           arrow={true} />
         <Option
           iconName='log-out'
