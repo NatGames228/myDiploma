@@ -10,7 +10,7 @@ import {
 import Img from './components/Img';
 import FormButton from './components/FormButton';
 
-import { getQuizzes, getQuestionsByQuizId, getQuizById } from '../utils/database';
+import { getQuestionsByQuizId } from '../utils/database';
 
 import { COLORS, SIZES, IMAGES } from '../constants/theme';
 
@@ -58,13 +58,11 @@ const QuizScreen = ({ navigation, route }) => {
           <Image
             source={{ uri: imageUrl }}
             style={styles.img}
-          /> : 
+          /> :
           null
       }
       <View style={styles.container}>
-        <Text>
-          123
-        </Text>
+        <Text style={{ textAlign: 'justify', fontSize: 18 }}>{description}</Text>
         {/* Points on the map */}
         {
           points.map(point => (

@@ -1,14 +1,14 @@
-import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
   Image
 } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/core'
+
+import Option from './components/Option';
 
 import { auth } from '../utils/firebase'
 import { getUserById, } from '../utils/database';
@@ -87,28 +87,6 @@ const SettingsScreen = () => {
 
 export default SettingsScreen
 
-const Option = ({ iconName, text, cb, arrow }) => (
-  <TouchableOpacity
-    onPress={cb}
-    style={styles.option}
-  >
-    <Ionicons name={iconName} style={{
-      fontSize: 25,
-      color: COLORS.black,
-      padding: 10,
-      backgroundColor: '#53A7FB',
-      borderRadius: 15,
-      color: COLORS.white,
-    }} />
-    <Text style={styles.buttonText}>{text}</Text>
-    {
-      arrow ?
-        <Ionicons name='arrow-forward' />
-        : null
-    }
-  </TouchableOpacity>
-)
-
 const styles = StyleSheet.create({
   imgContainer: {
     width: SIZES.width,
@@ -129,26 +107,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 15,
     alignItems: 'center',
-  },
-  option: {
-    padding: 7,
-    width: '100%',
-    borderRadius: 20,
-    marginVertical: 5,
-    marginHorizontal: 10,
-    paddingRight: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.white,
-    justifyContent: 'space-between',
-    elevation: 2,
-  },
-  buttonText: {
-    flex: 1,
-    color: COLORS.black,
-    fontWeight: 'bold',
-    fontSize: 16,
-    margin: 20,
   },
   img: {
     width: 120,

@@ -31,7 +31,7 @@ export default function App() {
         <NativeStack.Screen options={styles.quiz} name="Login" component={LoginScreen} />
         <Stack.Screen options={styles.quiz} name="Registration" component={RegistrationScreen} />
         <NativeStack.Screen options={{ headerShown: false }} name="Main" component={MainContainer} />
-        <Stack.Screen options={styles.quiz} name="Img" component={ImgScreen} />
+        <Stack.Screen options={styles.quiz} name="ImgScreen" component={ImgScreen} />
         <Stack.Screen options={styles.quiz} name="QuizScreen" component={QuizScreen} />
         <Stack.Screen options={{ headerShown: false }} name="AddQuestionScreen" component={AddQuestionScreen} />
         <Stack.Screen options={{ headerShown: false }} name="PlayQuizScreen" component={PlayQuizScreen} />
