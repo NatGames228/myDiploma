@@ -6,7 +6,22 @@ export const createUser = (uid, name, imageUrl) => {
     uid,
     name,
     imageUrl,
-    role: 'user'
+    role: 'user',
+    xp: '0',
+  });
+};
+
+export const updateUser = (uid, name, imageUrl) => {
+  return firestore.collection('Users').doc(uid).update({
+    uid,
+    name,
+    imageUrl,
+  });
+};
+
+export const updateXp = (uid, xp) => {
+  return firestore.collection('Users').doc(uid).update({
+    xp
   });
 };
 
@@ -22,12 +37,12 @@ export const addQuizForUser = (uid, currentQuizId, data) => {
 
 // Get All Users
 export const getUsers = () => {
-  return firestore.collection('Users').get();
+  return firestore.collection('Users');
 };
 
 // Get Users Details by id
 export const getUserById = uid => {
-  return firestore.collection('Users').doc(uid).get();
+  return firestore.collection('Users').doc(uid);
 };
 
 // Get data of user by uid
@@ -36,7 +51,6 @@ export const getDataByUid = uid => {
     .collection('Users')
     .doc(uid)
     .collection('Quizzes')
-    .get();
 };
 
 // Get data of user by uid and quizId
@@ -70,7 +84,7 @@ export const createQuestion = (currentQuizId, currentQuestionId, question) => {
 
 // Get All Quizzes
 export const getQuizzes = () => {
-  return firestore.collection('Quizzes').get();
+  return firestore.collection('Quizzes');
 };
 
 // Get Quiz Details by id
@@ -88,5 +102,4 @@ export const getQuestionsByQuizId = currentQuizId => {
     .collection('Quizzes')
     .doc(currentQuizId)
     .collection('QNA')
-    .get();
 };

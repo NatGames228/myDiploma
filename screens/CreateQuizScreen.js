@@ -22,13 +22,15 @@ const CreateQuizScreen = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageUri, setImageUri] = useState('');
-
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleQuizSave = async () => {
     if (title == '' || description == '') {
       ToastAndroid.show('input error', ToastAndroid.SHORT);
       return;
     }
+    if (isDisabled) { return; }
+    setIsDisabled(true)
 
     const currentQuizId = Math.floor(100000 + Math.random() * 9000).toString();
     // Save to firestore
@@ -50,16 +52,14 @@ const CreateQuizScreen = ({ navigation }) => {
     }
 
     await createQuiz(currentQuizId, title, description, imageUrl);
+    clear();
+    ToastAndroid.show('Quiz Saved', ToastAndroid.SHORT);
 
-    // Navigate to Add Question string
+    setIsDisabled(false)
     navigation.navigate('AddQuestionScreen', {
       currentQuizId: currentQuizId,
       currentQuisTitle: title,
     });
-
-    // Reset
-    clear();
-    ToastAndroid.show('Quiz Saved', ToastAndroid.SHORT);
   };
 
   const clear = () => {
@@ -127,14 +127,14 @@ const CreateQuizScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <FormButton
           labelText="Calsel"
-          style={{ width: '45%'}}
+          style={{ width: '45%' }}
           isPrimary={false}
           handleOnPress={clear}
         />
         <FormButton
           labelText="Save Quiz"
           handleOnPress={handleQuizSave}
-          style={{width: '45%'}}
+          style={{ width: '45%' }}
         />
       </View>
 

@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/core'
 import Option from './components/Option';
 
 import { auth } from '../utils/firebase'
-import { getUserById, } from '../utils/database';
+import { getUserById } from '../utils/database';
 
 import { COLORS, IMAGES, SIZES } from '../constants/theme'
 
@@ -21,11 +21,14 @@ const SettingsScreen = () => {
   const navigation = useNavigation()
 
   const getUserInfo = async () => {
+    console.log('change SettingsScreen')
     const email = auth.currentUser?.email;
     const userInfo = await getUserById(auth.currentUser?.uid);
-    const userData = userInfo.data();
-    userData['email'] = email;
-    setUser(userData)
+    userInfo.onSnapshot(data => {
+      const userData = data.data();
+      userData['email'] = email;
+      setUser(userData)
+    })
   }
 
   const handleSignOut = () => {

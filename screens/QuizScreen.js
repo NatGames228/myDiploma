@@ -18,39 +18,41 @@ const QuizScreen = ({ navigation, route }) => {
   const { title, id, description, imageUrl } = route.params;
   const [points, setPoints] = useState([]);
 
-  navigation.setOptions({ title })
-
   const getQuizDetails = async () => {
     // Get Questions for current quiz
     const points = await getQuestionsByQuizId(id);
 
-    // Transform and shuffle options
-    let tempQuestions = [];
-    await points.docs.forEach(async res => {
-      let question = res.data();
+    points.onSnapshot(async docs => {
+      console.log('change QuizScreen');
+      const pointsDocs = docs.docs;
+      let tempQuestions = [];
 
-      // img question
-      if (!question.imageUrl) {
-        question.imageUrl = IMAGES.noImage;
-      }
+      pointsDocs.forEach(async res => {
+        let question = res.data();
 
-      // Create Single array of all options and shuffle it
-      question.allOptions = [
-        ...question.incorrect_answers,
-        question.correct_answer,
-      ];
+        // img question
+        if (!question.imageUrl) {
+          question.imageUrl = IMAGES.noImage;
+        }
 
-      await tempQuestions.push(question);
-    });
+        // Create Single array of all options and shuffle it
+        question.allOptions = [
+          ...question.incorrect_answers,
+          question.correct_answer,
+        ];
 
-    setPoints([...tempQuestions]);
+        await tempQuestions.push(question);
+      });
+
+      setPoints([...tempQuestions]);
+    })
   };
 
   useEffect(() => {
+    navigation.setOptions({ title })
     getQuizDetails();
   }, []);
 
-  // console.log(points)
   return (
     <ScrollView>
       {

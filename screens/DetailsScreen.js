@@ -33,52 +33,52 @@ const DetailsScreen = () => {
   const getAllDataOfUid = async () => {
     const quizzes = await getDataByUid(auth.currentUser?.uid);
 
-    let quiz = 0;
-    let correct = 0;
-    let incorrect = 0;
-    let total = 0;
-
-    await quizzes.docs.forEach(async res => {
-      let currentQuiz = res.data();
-      quiz++;
-      correct += currentQuiz.correctCount;
-      incorrect += currentQuiz.incorrectCount;
-      total += currentQuiz.total;
-    });
-
-    setQuizCount(quiz);
-    setCorrectCount(correct);
-    setIncorrectCount(incorrect);
-    setTotalCount(total);
+    quizzes.onSnapshot(async docs => {
+      console.log('change Statistics');
+      const quizzesDocs = docs.docs;
+      let quiz = 0;
+      let correct = 0;
+      let incorrect = 0;
+      let total = 0;
+  
+      await quizzesDocs.forEach(async res => {
+        let currentQuiz = res.data();
+        quiz++;
+        correct += currentQuiz.correctCount;
+        incorrect += currentQuiz.incorrectCount;
+        total += currentQuiz.total;
+      });
+  
+      setQuizCount(quiz);
+      setCorrectCount(correct);
+      setIncorrectCount(incorrect);
+      setTotalCount(total);
+    })
   }
 
   const getAllUsers = async () => {
     const users = await getUsers();
 
-    let tempUsers = [];
+    users.onSnapshot(async docs => {
+      const usersDocs = docs.docs;
+      console.log('change TOP10');
 
-    for (const user of users.docs) {
-      const quizzes = await getDataByUid(user.id);
+      let tempUsers = [];
 
-      let xp = 0;
+      for (const user of usersDocs) {
+        await tempUsers.push(user.data());
+      }
 
-      await quizzes.docs.forEach(async res => {
-        let currentQuiz = res.data();
-        xp += currentQuiz.correctCount;
-      });
-
-      await tempUsers.push({ xp, ...user.data() });
-    }
-
-    setAllUsers(
-      tempUsers
-        .filter(user => user.role != 'admin')
-        .sort((a, b) => {
-          if (a.xp > b.xp) return -1;
-          if (a.xp < b.xp) return 1;
-          return 0;
-        })
-    )
+      setAllUsers(
+        tempUsers
+          .filter(user => user?.role != 'admin')
+          .sort((a, b) => {
+            if (a.xp > b.xp) return -1;
+            if (a.xp < b.xp) return 1;
+            return 0;
+          })
+      )
+    })
   }
 
   useEffect(() => {

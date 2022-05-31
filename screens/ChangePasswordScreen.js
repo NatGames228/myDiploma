@@ -13,7 +13,6 @@ import { auth } from '../utils/firebase'
 import { COLORS } from '../constants/theme'
 
 const ChangeDataScreen = ({ navigation }) => {
-  navigation.setOptions({ title: 'Change Password' })
   const [user, setUser] = useState(auth.currentUser);
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -47,6 +46,10 @@ const ChangeDataScreen = ({ navigation }) => {
     setNewPassword('');
     setConfirmPassword('');
   }
+
+  useEffect(() => {
+    navigation.setOptions({ title: 'Change Password' })
+  }, []);
 
   return (
     <View

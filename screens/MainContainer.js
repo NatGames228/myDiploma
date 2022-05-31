@@ -18,15 +18,18 @@ const MainContainer = () => {
   const [user, setUser] = useState({})
 
   const getUserInfo = async () => {
+    console.log('change MainContainer')
     const userInfo = await getUserById(auth.currentUser?.uid);
-    const userData = userInfo.data();
-    setUser(userData)
+    userInfo.onSnapshot(data => {
+      const userData = data.data();
+      setUser(userData)
+    })
   }
 
   useEffect(() => {
     getUserInfo();
   }, []);
-  
+
   return (
     <Tab.Navigator
       initialRouteName={'Home'}
@@ -57,7 +60,7 @@ const MainContainer = () => {
       <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'Home'} component={HomeScreen} />
       <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'Details'} component={DetailsScreen} />
       {
-        user.role == 'admin' ?
+        user?.role == 'admin' ?
           <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'CreateQuiz'} component={CreateQuizScreen} />
           : null
       }

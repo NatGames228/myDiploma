@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { COLORS } from '../../constants/theme';
@@ -10,8 +10,10 @@ const FormButton = ({
   isPrimary = true,
   ...more
 }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
   return (
     <TouchableOpacity
+      disabled={isDisabled}
       style={[
         styles.touchableOpacity,
         {
@@ -20,7 +22,11 @@ const FormButton = ({
         }
       ]}
       activeOpacity={0.7}
-      onPress={handleOnPress}
+      onPress={() => {
+        setIsDisabled(true)
+        handleOnPress()
+        setIsDisabled(false)
+      }}
       {...more}>
       <Text
         style={[

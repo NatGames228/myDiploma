@@ -11,7 +11,7 @@ const ResultModal = ({
   totalCount,
   handleOnClose,
   handleRetry,
-  handleHome,
+  handleBack,
 }) => {
   return (
     <Modal
@@ -53,14 +53,14 @@ const ResultModal = ({
               Try Again
             </Text>
           </TouchableOpacity>
-          {/* Go Home */}
+          {/* Go Back */}
           <TouchableOpacity
-            style={styles.goHome}
-            onPress={handleHome}>
+            style={styles.goBack}
+            onPress={handleBack}>
             <Ionicons name="home" style={{ color: COLORS.primary }} />
             <Text
-              style={styles.goHomeText}>
-              Go Home
+              style={styles.goBackText}>
+              Go Back
             </Text>
           </TouchableOpacity>
         </View>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     marginLeft: 10,
   },
-  goHome: {
+  goBack: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 50,
   },
-  goHomeText: {
+  goBackText: {
     textAlign: 'center',
     color: COLORS.primary,
     marginLeft: 10,

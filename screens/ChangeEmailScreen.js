@@ -13,7 +13,6 @@ import { auth } from '../utils/firebase'
 import { COLORS } from '../constants/theme'
 
 const ChangeDataScreen = ({ navigation }) => {
-  navigation.setOptions({ title: 'Change Email' })
   const [user, setUser] = useState(auth.currentUser);
   const [email, setEmail] = useState(user.email)
 
@@ -39,6 +38,10 @@ const ChangeDataScreen = ({ navigation }) => {
   const clear = () => {
     setEmail(user.email);
   }
+
+  useEffect(() => {
+    navigation.setOptions({ title: 'Change Email' })
+  }, []);
 
   return (
     <View

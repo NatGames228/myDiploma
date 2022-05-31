@@ -16,7 +16,7 @@ import ResultModal from './components/ResultModal';
 import FormButton from './components/FormButton';
 
 import { auth } from '../utils/firebase'
-import { addQuizForUser } from '../utils/database'
+import { addQuizForUser, getDataByUid, updateXp } from '../utils/database'
 
 import { COLORS } from '../constants/theme';
 
@@ -50,29 +50,46 @@ const PlayQuizScreen = ({ navigation, route }) => {
     // Get Questions for current quiz
     const questions = await getQuestionsByQuizId(currentQuizId);
 
-    // Transform and shuffle options
-    let tempQuestions = [];
-    await questions.docs.forEach(async res => {
-      let question = res.data();
+    questions.onSnapshot(async docs => {
+      console.log('change PlayQuizScreen')
+      const questionsDocs = docs.docs;
+      let tempQuestions = [];
 
-      // Create Single array of all options and shuffle it
-      question.allOptions = shuffleArray([
-        ...question.incorrect_answers,
-        question.correct_answer,
-      ]);
-      await tempQuestions.push(question);
-    });
-
-    setQuestions([...tempQuestions]);
+      await questionsDocs.forEach(async res => {
+        let question = res.data();
+  
+        // Create Single array of all options and shuffle it
+        question.allOptions = shuffleArray([
+          ...question.incorrect_answers,
+          question.correct_answer,
+        ]);
+        await tempQuestions.push(question);
+      });
+  
+      setQuestions([...tempQuestions]);
+    })
   };
 
-  const pushDataInDb = async () => {   
+  const pushDataInDb = async () => {
     await addQuizForUser(auth.currentUser?.uid, currentQuizId, {
       correctCount,
       incorrectCount,
       total: questions.length
     })
+    updateUserXp()
   };
+
+  const updateUserXp = async () => {
+    const quizzes = await getDataByUid(auth.currentUser?.uid).get();
+    let xp = 0;
+
+    await quizzes.docs.forEach(async res => {
+      let currentQuiz = res.data();
+      xp += currentQuiz.correctCount;
+    });
+
+    await updateXp(auth.currentUser?.uid, xp)
+  }
 
   useEffect(() => {
     getQuizAndQuestionDetails();
@@ -233,7 +250,7 @@ const PlayQuizScreen = ({ navigation, route }) => {
           setIsResultModalVisible(false);
           pushDataInDb();
         }}
-        handleHome={() => {
+        handleBack={() => {
           navigation.goBack();
           setIsResultModalVisible(false);
           pushDataInDb();

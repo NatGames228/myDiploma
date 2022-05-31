@@ -12,16 +12,21 @@ import FormInput from './components/FormInput';
 import FormButton from './components/FormButton';
 
 import { auth, storage } from '../utils/firebase'
-import { createUser } from '../utils/database';
+import { updateUser } from '../utils/database';
 
 import { COLORS, IMAGES } from '../constants/theme'
 
 const EditProfileScreen = ({ route, navigation }) => {
-  navigation.setOptions({ title: 'Edit Profile' })
-  const [user, setUser] = useState(route.params);
-  const [imageUri, setImageUri] = useState(user.imageUrl)
-  const [name, setName] = useState(user.name)
+  const [user, setUser] = useState({});
+  const [imageUri, setImageUri] = useState('')
+  const [name, setName] = useState('')
+  const [isDisabled, setIsDisabled] = useState(false);
 
+  const getUserData = () => {
+    setImageUri(user.imageUrl);
+    setName(user.name);
+    setUser(route.params);
+  }
 
   const update = async () => {
     if (name == '') {
@@ -29,6 +34,8 @@ const EditProfileScreen = ({ route, navigation }) => {
       return;
     }
     if (name == user.name && imageUri == user.imageUrl) { return; }
+    if (isDisabled) { return; }
+    setIsDisabled(true)
 
     let imageUrl = '';
 
@@ -45,8 +52,9 @@ const EditProfileScreen = ({ route, navigation }) => {
       imageUrl = await reference.getDownloadURL();
     }
 
-    await createUser(auth.currentUser.uid, name, imageUrl)
+    await updateUser(auth.currentUser.uid, name, imageUrl ? imageUrl : user.imageUrl)
     ToastAndroid.show('success', ToastAndroid.SHORT);
+    setIsDisabled(false)
     navigation.goBack()
   }
 
@@ -68,6 +76,11 @@ const EditProfileScreen = ({ route, navigation }) => {
       setImageUri(result.uri);
     }
   };
+
+  useEffect(() => {
+    navigation.setOptions({ title: 'Edit Profile' });
+    getUserData();
+  }, [user]);
 
   return (
     <View

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Image,
   StyleSheet,
@@ -14,7 +14,10 @@ import { COLORS, SIZES } from '../constants/theme';
 
 const ImgScreen = ({ route, navigation }) => {
   const point = route.params;
-  navigation.setOptions({ title: point.title })
+
+  useEffect(() => {
+    navigation.setOptions({ title: point.title })
+  }, []);
 
   return (
     <ScrollView>
