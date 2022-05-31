@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-
 } from 'react-native';
 
 import { auth } from '../utils/firebase'
@@ -71,13 +70,15 @@ const DetailsScreen = () => {
       await tempUsers.push({ xp, ...user.data() });
     }
 
-    tempUsers.sort((a, b) => {
-      if (a.xp > b.xp) return -1;
-      if (a.xp < b.xp) return 1;
-      return 0;
-    })
-
-    setAllUsers([...tempUsers])
+    setAllUsers(
+      tempUsers
+        .filter(user => user.role != 'admin')
+        .sort((a, b) => {
+          if (a.xp > b.xp) return -1;
+          if (a.xp < b.xp) return 1;
+          return 0;
+        })
+    )
   }
 
   useEffect(() => {

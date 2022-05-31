@@ -45,7 +45,7 @@ const EditProfileScreen = ({ route, navigation }) => {
       imageUrl = await reference.getDownloadURL();
     }
 
-    await createUser(auth.currentUser.uid, name, imageUri)
+    await createUser(auth.currentUser.uid, name, imageUrl)
     ToastAndroid.show('success', ToastAndroid.SHORT);
     navigation.goBack()
   }

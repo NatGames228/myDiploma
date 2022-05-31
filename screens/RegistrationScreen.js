@@ -58,7 +58,7 @@ const RegistrationScreen = () => {
           imageUrl = await reference.getDownloadURL();
         }
 
-        await createUser(user.uid, name, imageUri)
+        await createUser(user.uid, name, imageUrl)
         console.log('Registered with:', user.email);
         console.log('uid:', user.uid);
       })
