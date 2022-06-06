@@ -11,18 +11,35 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { auth } from '../utils/firebase'
-import { getQuizzes, getDataByUidAndQuizId } from '../utils/database';
+import {
+  getQuizzes,
+  getUserById,
+  getDataByUidAndQuizId,
+  deleteQuiz
+} from '../utils/database';
 
 import { COLORS, IMAGES } from '../constants/theme';
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+  const [user, setUser] = useState({})
 
   const [allQuizzes, setAllQuizzes] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  const getUserInfo = async () => {
+    const userInfo = await getUserById(auth.currentUser?.uid);
+    userInfo.onSnapshot(data => {
+      const userData = data.data();
+      setUser(userData)
+    })
+  }
+
   const getAllQuizzes = async () => {
+
     setRefreshing(true);
     const quizzes = await getQuizzes();
 
@@ -41,6 +58,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getAllQuizzes();
+    getUserInfo();
   }, []);
 
   return (
@@ -80,6 +98,19 @@ const HomeScreen = () => {
               >
                 <Text style={{ color: COLORS.primary }}>Начать</Text>
               </TouchableOpacity>
+              {
+                user?.role == 'admin' ?
+                  <TouchableOpacity
+                    onPress={() => {
+                      deleteQuiz(quiz.id);
+                      getAllQuizzes()
+                    }
+                    }
+                  >
+                    <Ionicons name='close-circle' style={{fontSize: 35, color: COLORS.error}}/>
+                  </TouchableOpacity>
+                  : null
+              }
             </View>
           </>
         )}

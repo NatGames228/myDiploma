@@ -72,6 +72,10 @@ export const createQuiz = (currentQuizId, title, description, imageUrl) => {
   });
 };
 
+export const deleteQuiz = (currentQuizId) => {
+  return firestore.collection('Quizzes').doc(currentQuizId).delete();
+};
+
 // Create new question for current quiz
 export const createQuestion = (currentQuizId, currentQuestionId, question) => {
   return firestore
