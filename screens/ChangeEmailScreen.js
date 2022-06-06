@@ -18,7 +18,7 @@ const ChangeDataScreen = ({ navigation }) => {
 
   const update = () => {
     if (email == '') {
-      ToastAndroid.show('input error', ToastAndroid.SHORT);
+      ToastAndroid.show('Ошибка ввода', ToastAndroid.SHORT);
       return;
     }
     if (email == user.email) { return; }
@@ -26,7 +26,7 @@ const ChangeDataScreen = ({ navigation }) => {
     user
       .updateEmail(email)
       .then(() => {
-        ToastAndroid.show('success', ToastAndroid.SHORT);
+        ToastAndroid.show('Успешно', ToastAndroid.SHORT);
         navigation.goBack()
       })
       .catch(error => {
@@ -40,7 +40,7 @@ const ChangeDataScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Change Email' })
+    navigation.setOptions({ title: 'Изменить Email' })
   }, []);
 
   return (
@@ -52,7 +52,7 @@ const ChangeDataScreen = ({ navigation }) => {
       {/* Input */}
       <View style={styles.inputContainer}>
         <FormInput
-          labelText="Your Email"
+          labelText="Ваш Email"
           textColor='gray'
           onChangeText={val => setEmail(val)}
           value={email}
@@ -63,13 +63,13 @@ const ChangeDataScreen = ({ navigation }) => {
       {/* Buttons */}
       <View style={styles.buttonContainer}>
         <FormButton
-          labelText="Cansel"
+          labelText="Отмена"
           style={{ width: '45%' }}
           isPrimary={false}
           handleOnPress={clear}
         />
         <FormButton
-          labelText="Save"
+          labelText="Сохранить"
           handleOnPress={update}
           style={{ width: '45%' }}
         />

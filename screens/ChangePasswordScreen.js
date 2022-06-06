@@ -22,18 +22,18 @@ const ChangeDataScreen = ({ navigation }) => {
       newPassword == '' ||
       confirmPassword == ''
     ) {
-      ToastAndroid.show('input error', ToastAndroid.SHORT);
+      ToastAndroid.show('Ошибка ввода', ToastAndroid.SHORT);
       return;
     }
     if (newPassword != confirmPassword) {
-      ToastAndroid.show('passwords do not match', ToastAndroid.SHORT);
+      ToastAndroid.show('Пароли не совпадают', ToastAndroid.SHORT);
       return;
     }
 
     user
       .updatePassword(newPassword)
       .then(() => {
-        ToastAndroid.show('success', ToastAndroid.SHORT);
+        ToastAndroid.show('Успешно', ToastAndroid.SHORT);
         navigation.goBack()
       })
       .catch(error => {
@@ -48,7 +48,7 @@ const ChangeDataScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Change Password' })
+    navigation.setOptions({ title: 'Изменить пароль' })
   }, []);
 
   return (
@@ -60,7 +60,7 @@ const ChangeDataScreen = ({ navigation }) => {
       {/* Input */}
       <View style={styles.inputContainer}>
         <FormInput
-          labelText="New Password"
+          labelText="Новый пароль"
           textColor='gray'
           onChangeText={val => setNewPassword(val)}
           value={newPassword}
@@ -68,7 +68,7 @@ const ChangeDataScreen = ({ navigation }) => {
           secureTextEntry
         />
         <FormInput
-          labelText="Confirm New Password"
+          labelText="Подтверждение пароля"
           textColor='gray'
           onChangeText={val => setConfirmPassword(val)}
           value={confirmPassword}
@@ -80,13 +80,13 @@ const ChangeDataScreen = ({ navigation }) => {
       {/* Buttons */}
       <View style={styles.buttonContainer}>
         <FormButton
-          labelText="Cansel"
+          labelText="Отмена"
           style={{ width: '45%' }}
           isPrimary={false}
           handleOnPress={clear}
         />
         <FormButton
-          labelText="Save"
+          labelText="Сохранить"
           handleOnPress={update}
           style={{ width: '45%' }}
         />

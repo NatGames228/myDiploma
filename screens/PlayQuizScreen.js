@@ -224,7 +224,7 @@ const PlayQuizScreen = ({ navigation, route }) => {
         )}
         ListFooterComponent={() => (
           <FormButton
-            labelText="Submit"
+            labelText="Отправить"
             style={{ margin: 10 }}
             handleOnPress={() => {
               // Show Result modal
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   topBarText: {
-    fontSize: 30,
+    fontSize: 22,
     fontWeight: 'bold',
     marginLeft: 10,
   },

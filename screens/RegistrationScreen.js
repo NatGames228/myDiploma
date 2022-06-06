@@ -25,6 +25,7 @@ const RegistrationScreen = () => {
   const navigation = useNavigation()
 
   useEffect(() => {
+    navigation.setOptions({ title: 'Регистрация' });
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user && name) {
         navigation.replace("Main")
@@ -35,7 +36,7 @@ const RegistrationScreen = () => {
 
   const handleSingUp = () => {
     if (name == '') {
-      ToastAndroid.show('input error', ToastAndroid.SHORT);
+      ToastAndroid.show('Ошибка ввода', ToastAndroid.SHORT);
       return;
     }
     auth
@@ -53,7 +54,7 @@ const RegistrationScreen = () => {
             `/images/users/${user.uid}`,
           );
           await reference.put(blob).then(() => {
-            console.log('Image Uploaded');
+            console.log('Изображение добавлено');
           })
           imageUrl = await reference.getDownloadURL();
         }
@@ -98,19 +99,19 @@ const RegistrationScreen = () => {
       {/* Inputs */}
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder='Full Name'
+          placeholder='ФИО'
           value={name}
           onChangeText={text => setName(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder='Email'
+          placeholder='Email адрес'
           value={email}
           onChangeText={text => setEmail(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder='Password'
+          placeholder='Пароль'
           value={password}
           onChangeText={text => setPassword(text)}
           style={styles.input}
@@ -124,14 +125,14 @@ const RegistrationScreen = () => {
           onPress={handleSingUp}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Create account</Text>
+          <Text style={styles.buttonText}>Создать аккаунт</Text>
         </TouchableOpacity>
 
-      {/* Log in */}
+        {/* Log in */}
       </View>
       <View style={styles.footerView}>
-        <Text style={styles.footerText}>Don't have an account?
-          <Text onPress={() => navigation.goBack()} style={styles.footerLink}> Log in</Text>
+        <Text style={styles.footerText}>Уже есть аккаунт?
+          <Text onPress={() => navigation.goBack()} style={styles.footerLink}> Войти</Text>
         </Text>
       </View>
     </View>

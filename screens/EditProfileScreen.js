@@ -30,7 +30,7 @@ const EditProfileScreen = ({ route, navigation }) => {
 
   const update = async () => {
     if (name == '') {
-      ToastAndroid.show('input error', ToastAndroid.SHORT);
+      ToastAndroid.show('Ошибка ввода', ToastAndroid.SHORT);
       return;
     }
     if (name == user.name && imageUri == user.imageUrl) { return; }
@@ -47,13 +47,13 @@ const EditProfileScreen = ({ route, navigation }) => {
         `/images/users/${user.uid}`,
       );
       await reference.put(blob).then(() => {
-        console.log('Image Uploaded');
+        console.log('Изображение добавлено');
       })
       imageUrl = await reference.getDownloadURL();
     }
 
     await updateUser(auth.currentUser.uid, name, imageUrl ? imageUrl : user.imageUrl)
-    ToastAndroid.show('success', ToastAndroid.SHORT);
+    ToastAndroid.show('Успешно', ToastAndroid.SHORT);
     setIsDisabled(false)
     navigation.goBack()
   }
@@ -78,7 +78,7 @@ const EditProfileScreen = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Edit Profile' });
+    navigation.setOptions({ title: 'Изменить профиль' });
     getUserData();
   }, [user]);
 
@@ -102,7 +102,7 @@ const EditProfileScreen = ({ route, navigation }) => {
       {/* Input */}
       <View style={styles.inputContainer}>
         <FormInput
-          labelText="Your name"
+          labelText="Ваше имя"
           textColor='gray'
           onChangeText={val => setName(val)}
           value={name}
@@ -113,13 +113,13 @@ const EditProfileScreen = ({ route, navigation }) => {
       {/* Buttons */}
       <View style={styles.buttonContainer}>
         <FormButton
-          labelText="Cansel"
+          labelText="Отмена"
           style={{ width: '45%' }}
           isPrimary={false}
           handleOnPress={clear}
         />
         <FormButton
-          labelText="Save"
+          labelText="Сохранить"
           handleOnPress={update}
           style={{ width: '45%' }}
         />

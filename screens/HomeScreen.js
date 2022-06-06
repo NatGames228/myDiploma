@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   FlatList,
@@ -25,21 +26,17 @@ const HomeScreen = () => {
     setRefreshing(true);
     const quizzes = await getQuizzes();
 
-    quizzes.onSnapshot(async docs => {
-      setAllQuizzes([]);
-      console.log('change HomeScreen')
-      const quizzesDocs = docs.docs;
-      let tempQuizzes = [];
+    // Transform quiz data
+    let tempQuizzes = [];
+    for (quiz of quizzes.docs) {
+      const userQuizzes = await getDataByUidAndQuizId(auth.currentUser?.uid, quiz.id);
+      const userInfo = userQuizzes.data()
+      await tempQuizzes.push({ id: quiz.id, userInfo, ...quiz.data() });
+    }
 
-      for (quiz of quizzesDocs) {
-        const userQuizzes = await getDataByUidAndQuizId(auth.currentUser?.uid, quiz.id);
-        const userInfo = userQuizzes.data()
-        await tempQuizzes.push({ id: quiz.id, userInfo, ...quiz.data() });
-      }
+    await setAllQuizzes([...tempQuizzes]);
 
-      setAllQuizzes([...tempQuizzes]);
-      setRefreshing(false);
-    })
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -47,7 +44,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <View
+    <SafeAreaView
       style={styles.container}>
       <StatusBar backgroundColor={COLORS.white} barStyle={'dark-content'} />
 
@@ -81,13 +78,13 @@ const HomeScreen = () => {
                 style={styles.touchableOpacity}
                 onPress={() => { navigation.navigate('QuizScreen', quiz) }}
               >
-                <Text style={{ color: COLORS.primary }}>Play</Text>
+                <Text style={{ color: COLORS.primary }}>Начать</Text>
               </TouchableOpacity>
             </View>
           </>
         )}
       />
-    </View>
+    </SafeAreaView>
   )
 }
 

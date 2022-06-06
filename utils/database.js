@@ -84,7 +84,7 @@ export const createQuestion = (currentQuizId, currentQuestionId, question) => {
 
 // Get All Quizzes
 export const getQuizzes = () => {
-  return firestore.collection('Quizzes');
+  return firestore.collection('Quizzes').get();
 };
 
 // Get Quiz Details by id

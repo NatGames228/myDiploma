@@ -57,14 +57,14 @@ const MainContainer = () => {
       })}
     >
 
-      <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'Home'} component={HomeScreen} />
-      <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'Details'} component={DetailsScreen} />
+      <Tab.Screen options={{ title: 'Главная', headerShown: false, screenOptions: COLORS.primary }} name={'Home'} component={HomeScreen} />
+      <Tab.Screen options={{ title: 'Рейтинг', headerShown: false, screenOptions: COLORS.primary }} name={'Details'} component={DetailsScreen} />
       {
         user?.role == 'admin' ?
-          <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'CreateQuiz'} component={CreateQuizScreen} />
+          <Tab.Screen options={{ title: 'Добавить', headerShown: false, screenOptions: COLORS.primary }} name={'CreateQuiz'} component={CreateQuizScreen} />
           : null
       }
-      <Tab.Screen options={{ headerShown: false, screenOptions: COLORS.primary }} name={'Settings'} component={SettingsScreen} />
+      <Tab.Screen options={{ title: 'Настройки', headerShown: false, screenOptions: COLORS.primary }} name={'Settings'} component={SettingsScreen} />
 
     </Tab.Navigator>
   );

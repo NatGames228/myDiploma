@@ -54,7 +54,7 @@ const AddQuestionScreen = ({ navigation, route }) => {
       optionThree == '' ||
       optionFour == ''
     ) {
-      ToastAndroid.show('input error', ToastAndroid.SHORT);
+      ToastAndroid.show('Ошибка ввода', ToastAndroid.SHORT);
       return;
     }
 
@@ -73,7 +73,7 @@ const AddQuestionScreen = ({ navigation, route }) => {
         `/images/questions/${currentQuizId}_${currentQuestionId}`,
       );
       await reference.put(blob).then(() => {
-        console.log('Image Uploaded');
+        console.log('Изображение добавлено');
       })
       imageUrl = await reference.getDownloadURL();
     }
@@ -89,7 +89,7 @@ const AddQuestionScreen = ({ navigation, route }) => {
       incorrect_answers: [optionTwo, optionThree, optionFour],
       imageUrl: imageUrl,
     });
-    ToastAndroid.show('Question saved', ToastAndroid.SHORT);
+    ToastAndroid.show('Достопримечательнось сохранена', ToastAndroid.SHORT);
 
     // Reset
     setTitle('');
@@ -129,20 +129,17 @@ const AddQuestionScreen = ({ navigation, route }) => {
         <View style={{ padding: 20 }}>
           <Text
             style={styles.addQuestion}>
-            Add Question
-          </Text>
-          <Text style={{ textAlign: 'center', marginBottom: 20 }}>
-            For {currentQuizTitle}
+            Добавить достопримечательность
           </Text>
 
           <FormInput
-            labelText="Title"
+            labelText="Название"
             onChangeText={val => setTitle(val)}
             value={title}
           />
 
           <FormInput
-            labelText="Description"
+            labelText="Описание"
             onChangeText={val => setDescription(val)}
             value={description}
             multiline
@@ -156,7 +153,7 @@ const AddQuestionScreen = ({ navigation, route }) => {
                 style={styles.addImage}
                 onPress={selectImage}>
                 <Text style={{ opacity: 0.5, color: COLORS.primary }}>
-                  + add image
+                  + добавить фото
                 </Text>
               </TouchableOpacity>
             ) : (
@@ -173,50 +170,50 @@ const AddQuestionScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 20 }}>
             {/* Coordinates */}
             <FormInput
-              labelText="Latitude"
+              labelText="Широта"
               onChangeText={val => setLatitude(val)}
               value={latitude}
             />
             <FormInput
-              labelText="Longitude"
+              labelText="Долгота"
               onChangeText={val => setLongitude(val)}
               value={longitude}
             />
 
             {/* Question & Options */}
             <FormInput
-              labelText="Question"
+              labelText="Вопрос"
               onChangeText={val => setQuestion(val)}
               value={question}
             />
             <FormInput
-              labelText="Correct Answer"
+              labelText="Правильный ответ"
               onChangeText={val => setCorrectAnswer(val)}
               value={correctAnswer}
             />
             <FormInput
-              labelText="Option 2"
+              labelText="Вариант 2"
               onChangeText={val => setOptionTwo(val)}
               value={optionTwo}
             />
             <FormInput
-              labelText="Option 3"
+              labelText="Вариант 3"
               onChangeText={val => setOptionThree(val)}
               value={optionThree}
             />
             <FormInput
-              labelText="Option 4"
+              labelText="Вариант 4"
               onChangeText={val => setOptionFour(val)}
               value={optionFour}
             />
           </View>
 
           <FormButton
-            labelText="Save Question"
+            labelText="Сохранить"
             handleOnPress={handleQuestionSave}
           />
           <FormButton
-            labelText="Done & Go Home"
+            labelText="Вернуться на главную"
             isPrimary={false}
             handleOnPress={() => {
               setCurrentQuizId('');
@@ -239,7 +236,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addQuestion: {
-    fontSize: 20, textAlign: 'center', color: COLORS.black
+    fontSize: 20,
+    textAlign: 'center',
+    color: COLORS.black,
+    marginBottom: 20,
   },
   addImage: {
     alignItems: 'center',

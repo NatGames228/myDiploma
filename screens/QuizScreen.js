@@ -73,7 +73,7 @@ const QuizScreen = ({ navigation, route }) => {
         }
         <View style={{ alignItems: 'center' }}>
           <FormButton
-            labelText="start test"
+            labelText='Сдать тест'
             style={styles.btn}
             handleOnPress={() => {
               navigation.navigate('PlayQuizScreen', {

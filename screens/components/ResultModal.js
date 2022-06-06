@@ -23,24 +23,24 @@ const ResultModal = ({
         style={styles.resultView}>
         <View
           style={styles.bg}>
-          <Text style={{ fontSize: 28, color: COLORS.black }}>Results</Text>
+          <Text style={{ fontSize: 28, color: COLORS.black }}>Результат</Text>
           <View
             style={styles.answers}>
             <View style={{ alignItems: 'center', padding: 20 }}>
               <Text style={{ color: COLORS.success, fontSize: 30 }}>
                 {correctCount}
               </Text>
-              <Text style={{ fontSize: 16 }}>Correct</Text>
+              <Text style={{ fontSize: 16 }}>Правильно</Text>
             </View>
             <View style={{ alignItems: 'center', padding: 20 }}>
               <Text style={{ color: COLORS.error, fontSize: 30 }}>
                 {incorrectCount}
               </Text>
-              <Text style={{ fontSize: 16 }}>Incorrect</Text>
+              <Text style={{ fontSize: 16 }}>Неправильно</Text>
             </View>
           </View>
           <Text style={{ opacity: 0.8 }}>
-            {totalCount - (incorrectCount + correctCount)} Unattempted
+            {totalCount - (incorrectCount + correctCount)} без ответа
           </Text>
 
           {/* Try agian */}
@@ -50,7 +50,7 @@ const ResultModal = ({
             <Ionicons name="refresh" style={{ color: COLORS.white, transform: [{ rotateY: '180deg' }] }} />
             <Text
               style={styles.tryAgainText}>
-              Try Again
+              Попробуйте еще раз
             </Text>
           </TouchableOpacity>
           {/* Go Back */}
@@ -60,7 +60,7 @@ const ResultModal = ({
             <Ionicons name="home" style={{ color: COLORS.primary }} />
             <Text
               style={styles.goBackText}>
-              Go Back
+              Вернуться назад
             </Text>
           </TouchableOpacity>
         </View>

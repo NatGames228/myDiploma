@@ -19,6 +19,7 @@ const LoginScreen = () => {
   const navigation = useNavigation()
 
   useEffect(() => {
+    navigation.setOptions({ title: 'Авторизация' });
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         navigation.replace("Main")
@@ -47,13 +48,13 @@ const LoginScreen = () => {
     {/* Inputs */}
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder='Email'
+          placeholder='Email адрес'
           value={email}
           onChangeText={text => setEmail(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder='Password'
+          placeholder='Пароль'
           value={password}
           onChangeText={text => setPassword(text)}
           style={styles.input}
@@ -67,14 +68,14 @@ const LoginScreen = () => {
           onPress={handleLogin}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Log in</Text>
+          <Text style={styles.buttonText}>Войти</Text>
         </TouchableOpacity>
 
       {/* Sing up */}
       </View>
       <View style={styles.footerView}>
-        <Text style={styles.footerText}>Don't have an account?
-          <Text onPress={() => navigation.navigate('Registration')} style={styles.footerLink}> Sign up</Text>
+        <Text style={styles.footerText}>Нет аккаунта?
+          <Text onPress={() => navigation.navigate('Registration')} style={styles.footerLink}> Создать</Text>
         </Text>
       </View>
     </View >

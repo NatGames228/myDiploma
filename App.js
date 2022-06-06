@@ -49,7 +49,7 @@ const styles = {
     headerTintColor: COLORS.white,
     headerTitleStyle: {
       fontWeight: 'bold',
-      fontSize: 30
+      fontSize: 25
     },
     headerTitleAlign: 'center'
   }

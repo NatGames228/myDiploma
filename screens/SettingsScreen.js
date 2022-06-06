@@ -63,24 +63,24 @@ const SettingsScreen = () => {
       <View style={styles.optionsContainer}>
         <Option
           iconName='person'
-          text='Profile'
+          text='Профиль'
           cb={() => navigation.navigate('EditProfileScreen', user)}
           arrow={true}
         />
         <Option
           iconName='mail'
-          text='Email address'
+          text='Email адрес'
           cb={() => navigation.navigate('ChangeEmailScreen')}
           arrow={true}
         />
         <Option
           iconName='lock-open'
-          text='Password'
+          text='Пароль'
           cb={() => navigation.navigate('ChangePasswordScreen')}
           arrow={true} />
         <Option
           iconName='log-out'
-          text='Sign out'
+          text='Выйти'
           cb={handleSignOut}
         />
       </View>

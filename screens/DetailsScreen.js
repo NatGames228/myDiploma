@@ -89,16 +89,16 @@ const DetailsScreen = () => {
     <ScrollView>
       <View style={styles.container}>
         {/* Statistics */}
-        <Text style={styles.text}>Statistics</Text>
+        <Text style={styles.text}>Статистика</Text>
         <View style={styles.statistics}>
-          <Table text={'quizCount'} value={quizCount}></Table>
-          <Table text={'correctCount'} value={correctCount}></Table>
-          <Table text={'incorrectCount'} value={incorrectCount}></Table>
-          <Table text={'totalCount'} value={totalCount}></Table>
+          <Table text={'Всего'} value={totalCount}></Table>
+          <Table text={'Правильных'} value={correctCount}></Table>
+          <Table text={'Неправильных'} value={incorrectCount}></Table>
+          <Table text={'Квестов'} value={quizCount}></Table>
         </View>
 
         {/* Top */}
-        <Text style={styles.text}>TOP 10</Text>
+        <Text style={styles.text}>ТОП</Text>
         {
           allUsers.map((user, index) => {
             index++;
@@ -135,7 +135,7 @@ const DetailsScreen = () => {
                     </Text>
                   </View>
                   <View>
-                    <Text style={{ fontSize: 20, color: COLORS.primary }}>{user.xp} XP</Text>
+                    <Text style={{ fontSize: 20, color: COLORS.primary }}>{user.xp} очков</Text>
                   </View>
                 </View>
               </View>
