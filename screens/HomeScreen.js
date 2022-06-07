@@ -81,7 +81,7 @@ const HomeScreen = () => {
                 style={{ width: 60, height: 60, borderRadius: 30, marginRight: 20 }}
               />
               <View style={{ flex: 1, paddingRight: 10 }}>
-                <Text style={{ fontSize: 18, color: COLORS.black }}>
+                <Text style={{ fontSize: 16, color: COLORS.black }}>
                   {quiz.title}
                 </Text>
                 {
@@ -94,7 +94,7 @@ const HomeScreen = () => {
               </View>
               <TouchableOpacity
                 style={styles.touchableOpacity}
-                onPress={() => { navigation.navigate('QuizScreen', quiz) }}
+                onPress={() => { navigation.navigate('QuizScreen', {...quiz, user}) }}
               >
                 <Text style={{ color: COLORS.primary }}>Начать</Text>
               </TouchableOpacity>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   touchableOpacity: {
     paddingVertical: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
     borderRadius: 50,
     backgroundColor: COLORS.primary + '20',
   }

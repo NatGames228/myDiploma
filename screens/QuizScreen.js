@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
+  TouchableOpacity,
   ScrollView,
   StyleSheet,
   Image
@@ -15,7 +16,7 @@ import { getQuestionsByQuizId } from '../utils/database';
 import { COLORS, SIZES, IMAGES } from '../constants/theme';
 
 const QuizScreen = ({ navigation, route }) => {
-  const { title, id, description, imageUrl } = route.params;
+  const { title, id, description, imageUrl, user } = route.params;
   const [points, setPoints] = useState([]);
 
   const getQuizDetails = async () => {
@@ -29,7 +30,7 @@ const QuizScreen = ({ navigation, route }) => {
 
       pointsDocs.forEach(async res => {
         let question = res.data();
-
+        question.id = res.id;
         // img question
         if (!question.imageUrl) {
           question.imageUrl = IMAGES.noImage;
@@ -68,8 +69,24 @@ const QuizScreen = ({ navigation, route }) => {
         {/* Points on the map */}
         {
           points.map(point => (
-            <Img point={point} key={point.title} />
+            <Img point={point} user={user} quizId={id} key={point.title} />
           ))
+        }
+        {
+          user.role == 'admin' ?
+            <TouchableOpacity
+              style={styles.addImage}
+              onPress={() => {
+                navigation.navigate('AddQuestionScreen', {
+                  currentQuizId: id,
+                });
+              }}
+            >
+              <Text style={{ color: COLORS.white }}>
+                + добавить
+              </Text>
+            </TouchableOpacity>
+            : null
         }
         <View style={{ alignItems: 'center' }}>
           <FormButton
@@ -94,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.border,
     padding: 10,
+    alignItems: 'center',
     paddingTop: 0,
   },
   img: {
@@ -105,6 +123,18 @@ const styles = StyleSheet.create({
     width: '30%',
     borderRadius: 30,
     marginBottom: 5,
+  },
+  addImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    width: 100,
+    height: 100,
+    backgroundColor: COLORS.primary,
+    borderColor: 'grey',
+    borderWidth: 3,
+    borderRadius: 50,
   },
 });
 

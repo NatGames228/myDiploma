@@ -1,20 +1,42 @@
 import React from 'react';
-import { TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Img = ({ point }) => {
+import { deleteQuestion } from '../../utils/database';
+
+import { COLORS, SIZES } from '../../constants/theme';
+
+const Img = ({ point, user, quizId }) => {
   const navigation = useNavigation()
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('ImgScreen', point)}
-      style={styles.container}
-    >
-      <Image
-        source={{ uri: point.imageUrl }}
-        style={styles.img}
-      />
+    <>
+      <View style={{ flexDirection: 'row', }}>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ImgScreen', point)}
+          style={styles.container}
+        >
+          <Image
+            source={{ uri: point.imageUrl }}
+            style={styles.img}
+          />
+        </TouchableOpacity>
+
+        {
+          user.role == 'admin' ?
+            <TouchableOpacity 
+            style={{ position: 'absolute', right: SIZES.width / 2 - 70 }}
+            onPress={() => deleteQuestion(quizId, point.id)}
+            >
+              <Ionicons name='close-circle' style={{ fontSize: 35, color: COLORS.error }} />
+            </TouchableOpacity>
+            : null
+        }
+
+      </View>
       <Text style={{ fontSize: 22 }}>{point.title}</Text>
-    </TouchableOpacity>
+    </>
   )
 };
 

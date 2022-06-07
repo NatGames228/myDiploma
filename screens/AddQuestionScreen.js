@@ -23,9 +23,6 @@ const AddQuestionScreen = ({ navigation, route }) => {
   const [currentQuizId, setCurrentQuizId] = useState(
     route.params.currentQuizId,
   );
-  const [currentQuizTitle, setCurrentQuizTitle] = useState(
-    route.params.currentQuizTitle,
-  );
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

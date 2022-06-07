@@ -86,6 +86,15 @@ export const createQuestion = (currentQuizId, currentQuestionId, question) => {
     .set(question);
 };
 
+export const deleteQuestion = (currentQuizId, currentQuestionId) => {
+  return firestore
+    .collection('Quizzes')
+    .doc(currentQuizId)
+    .collection('QNA')
+    .doc(currentQuestionId)
+    .delete();
+};
+
 // Get All Quizzes
 export const getQuizzes = () => {
   return firestore.collection('Quizzes').get();
